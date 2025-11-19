@@ -1,52 +1,53 @@
 server:
-  port: 8080
+  port: 8080    # 서버 포트 번호
   servlet:
     encoding:
-      charset: utf-8
-      force: true
+      charset: utf-8  # 요청/응답 문자 인코딩 지정
+      force: true     # 강제로 utf-8로 처리
   error:
-    include-exception: true
-    include-stacktrace: always
+    include-exception: true     # 응답 Body에 예외 메세지 포함
+    include-stacktrace: always  # 스택드레이스 포함 여부
     whitelabel:
-      enabled: false
+      enabled: false    # 기본 에러 페이지 사용 안함
+
 
 spring:
   mvc:
-    throw-exception-if-no-handler-found: true
-    dispatch-options-request: false
+    throw-exception-if-no-handler-found: true   # 처리하는 controller가 없다면 예외처리
+    dispatch-options-request: false             # options 요청을 스프링이 처리하지 않음
     view:
       prefix: /WEB-INF/view/  # jsp 파일 경로
       suffix: .jsp            # 확장자
     hiddenmethod:
       filter:
-        enabled: true         # update, delete put방식으로 보내기 위한 설정
+        enabled: true         # HTML의 put, delete, patch 요청을 지원
   servlet:
     multipart:
-      max-file-size: 20MB
-      max-request-size: 20MB
+      max-file-size: 20MB     # 단일 파일의 최대 크기
+      max-request-size: 20MB  # 전체 요청의 총 용량 제한
   datasource:       # DB 설정
-    url: jdbc:h2:mem:testdb;MODE=MySQL
-    driver-class-name: org.h2.Driver
-    username: user  # 유저 이름
-    password:       # 비밀번호 (비워두면 비밀번호 X)
+    url: jdbc:h2:mem:testdb;MODE=MySQL    # H2 메모리 DB 사용 (MySQL 문법을 최대한 지원)
+    driver-class-name: org.h2.Driver      # H2 JDBC 드라이버 클래스
+    username: user                        # 유저 이름
+    password:                             # 비밀번호 (비워두면 비밀번호 X)
   sql:
-    init: # 초기 sql 파일 읽기
-      schema-locations: # 스키마 (테이블 생성 등)
+    init:     # 초기 sql 파일 읽기
+      schema-locations:           # 스키마 (테이블 생성 등)
         - classpath:db/table.sql
-      data-locations: # 샘플 데이터
+      data-locations:             # 샘플 데이터
         - classpath:db/data.sql
   h2:
     console:
-      enabled: true
-  output:
+      enabled: true     # 웹 콘솔 페이지 (http://localhost:8080/h2-console)
+  output:       
     ansi:
-      enabled: always
+      enabled: always   # 스프링 대시보드 로그에 색깔 적용
   application:
-    name: pentagonUniv
+    name: pentagonUniv  # 애플리케이션 이름
 
 
 mybatis:
-  mapper-locations: classpath:/mapper/**/*.xml
+  mapper-locations: classpath:/mapper/**/*.xml    # Mapper XML 파일 경로 설정
   configuration:
-    map-underscore-to-camel-case: true
+    map-underscore-to-camel-case: true            # Java 필드명을 카멜케이스로 자동 매핑
 

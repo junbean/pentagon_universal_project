@@ -19,7 +19,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface UserRepository {
-
     // 로그인용
     public PrincipalDto selectById(Integer userId);
 
@@ -29,12 +28,6 @@ public interface UserRepository {
     // id 이용해서 user_tb에 insert
     public int insertToUser(User user);
 
-	/**
-	  * @Method Name : findById
-	  * @작성일 : 2024. 3. 12.
-	  * @작성자 : 박경진
-	  * @변경이력 : 
-	  * @Method 설명 : id로 user 정보 조회
-	  */
+	// userId로 user 정보 조회
 	public UserInfoDto findById(Integer userId);
 }

@@ -47,13 +47,15 @@ public class UserService {
 
     @Transactional
     public PrincipalDto login(LoginDto loginDto) {
+        // 아이디로 조회
         PrincipalDto userEntity = userRepository.selectById(loginDto.getId());
 
+        // 유저가 없는 경우
         if (userEntity == null) {
-
             throw new CustomRestfullException(Define.NOT_FOUND_ID, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+        // 비밀번호가 틀린 경우
         if (!passwordEncoder.matches(loginDto.getPassword(), userEntity.getPassword())) {
             throw new CustomRestfullException(Define.WRONG_PASSWORD, HttpStatus.BAD_REQUEST);
         }

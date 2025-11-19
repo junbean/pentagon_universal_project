@@ -25,7 +25,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @RequiredArgsConstructor
 public class WebMvcConfig implements WebMvcConfigurer {
-    private final AuthIntercepter authIntercepter;
+    private final AuthInterceptor authIntercepter;
     private final UserRoleAuthIntercepterForProfessor authIntercepterForProfessor;
     private final UserRoleAuthIntercepterForStaff authIntercepterForStaff;
     private final UserRoleAuthIntercepterForStudent authIntercepterForStudent;

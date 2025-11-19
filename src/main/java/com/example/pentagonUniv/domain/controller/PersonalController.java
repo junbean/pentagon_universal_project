@@ -21,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
@@ -53,12 +54,37 @@ public class PersonalController {
      */
     @GetMapping("/")
     public String home(Model model) {
+        // 세션에서 사용자 정보를 가져옴
         PrincipalDto principal = (PrincipalDto) session.getAttribute(Define.PRINCIPAL);
 
+        // 수강신청 기간 설정
         Integer period = SUGANG_PERIOD;
         model.addAttribute("periodNumber", period);
 
-        // Principal 객체가 null이 아닌지 확인
+        // 비로그인 사용자
+        if(principal == null) {
+            // Principal 객체가 null인 경우에 대한 처리
+            // 로그인되지 않은 사용자에게 보여줄 화면 등을 설정
+            // 예: 로그인 화면으로 리다이렉트 또는 메시지 표시 등
+            return "main";
+        }
+
+        // 로그인 사용자
+        switch (principal.getUserRole()) {
+            case "student":
+                StudentInfoDto studentInfo = userService.readStudentInfo(principal.getId());
+                model.addAttribute("userInfo", studentInfo);
+                break;
+            case "staff":
+                // 교직원 로직
+                break;
+            case "professor":
+                // 교수 로직
+                break;
+
+
+        }
+
         if (principal != null) {
             if (principal.getUserRole().equals("student")) {
                 // 학생인 경우
@@ -112,7 +138,7 @@ public class PersonalController {
     @PostMapping("/login")
     public String signInProc(@Valid LoginDto loginDto, BindingResult bindingResult,
                              HttpServletResponse response, HttpServletRequest request) {
-
+        // 입력값 검증 (Validation check)
         if (bindingResult.hasErrors()) {
             StringBuilder sb = new StringBuilder();
             bindingResult.getAllErrors().forEach(error -> {
@@ -121,7 +147,10 @@ public class PersonalController {
             throw new CustomRestfullException(sb.toString(), HttpStatus.BAD_REQUEST);
         }
 
+        // 로그인 처리
         PrincipalDto principal = userService.login(loginDto);
+
+        // 체크박스가 on일 경우 -> 쿠키에 유저정보 저장
         if ("on".equals(loginDto.getRememberId())) {
             Cookie cookie = new Cookie("id", loginDto.getId() + "");
             cookie.setMaxAge(60 * 60 * 24 * 7);
@@ -138,8 +167,11 @@ public class PersonalController {
                 }
             }
         }
+        
+        // 세션에 사용자 정보 저장
         session.setAttribute(Define.PRINCIPAL, principal);
 
+        // 리다이렉트
         return "redirect:/";
     }
 

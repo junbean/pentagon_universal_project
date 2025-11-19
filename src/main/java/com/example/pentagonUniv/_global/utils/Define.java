@@ -13,7 +13,6 @@ package com.example.pentagonUniv._global.utils;
  */
 public class Define {
 
-
     public final static String PRINCIPAL = "principal";
 
     public final static String CREATE_FAIL = "생성에 실패하였습니다.";
