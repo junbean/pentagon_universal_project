@@ -1,4 +1,4 @@
-package com.example.pentagonUniv.domain.repository.model;
+package com.example.pentagonUniv.domain.user;
 
 import lombok.Data;
 
@@ -16,7 +16,7 @@ import lombok.Data;
 @Data
 public class User {
 
-    private Integer id;
+    private Long id;
     private String password;
     private String userRole;
 }

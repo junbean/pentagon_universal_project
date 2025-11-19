@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page import="com.example.pentagonUniv.domain.dto.response.PrincipalDto" %>
+<%@ page import="com.example.pentagonUniv.domain.user.dto.PrincipalDto" %>
 <%@ page import="com.example.pentagonUniv._global.utils.Define" %>
 
 <!DOCTYPE html>

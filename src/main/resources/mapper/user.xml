@@ -3,34 +3,15 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.pentagonUniv.domain.repository.interfaces.UserRepository">
-    <select id="selectById" resultType="com.example.pentagonUniv.domain.dto.response.PrincipalDto">
-      <![CDATA[  SELECT u.*,
-        CASE WHEN sd.name IS NOT NULL THEN sd.name
-        WHEN sf.name IS NOT NULL THEN sf.name
-        WHEN p.name IS NOT NULL THEN p.name
-        END AS name
-        FROM cu_user AS u
-        LEFT JOIN cu_student AS sd
-        ON u.id = sd.id
-        LEFT JOIN cu_staff AS sf
-        ON u.id = sf.id
-        LEFT JOIN cu_professor AS p
-        ON u.id = p.id
-        where u.id = #{userId}]]>
+<mapper namespace="com.example.pentagonUniv.domain.user.UserRepository">
+    <select id="selectByUserNumber" resultType="com.example.pentagonUniv.domain.user.dto.PrincipalDto">
+        SELECT *
+        FROM pu_user
+        WHERE user_number = #{userNumber}
     </select>
 
-    <update id="updatePassword">
-      <![CDATA[  UPDATE cu_user SET password = #{afterPassword}
-        WHERE id = #{id}]]>
-    </update>
-
-    <insert id="insertToUser">
-       <![CDATA[ INSERT INTO cu_user
-        VALUES (#{id}, #{password}, #{userRole})]]>
-    </insert>
-
-	<select id="findById" resultType="com.example.pentagonUniv.domain.dto.UserInfoDto">
-		<![CDATA[SELECT * FROM cu_user WHERE id = #{userId}	]]>
+    <!--  로그인 성공시 세션 저장  -->
+	<select id="findById" resultType="com.example.pentagonUniv.domain.user.dto.UserInfoDto">
+		<![CDATA[SELECT * FROM pu_user WHERE id = #{userId}	]]>
 	</select>
 </mapper>

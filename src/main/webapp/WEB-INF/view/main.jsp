@@ -11,7 +11,7 @@
 <script>
 <!-- 비밀번호를 확인 하여 id와 비밀번호가 같으면 초기 생성된 계정임, 그래서 비밀번호 변경 팝업창을 띄우게 함 -->
 
-<%@ page import="com.example.pentagonUniv.domain.dto.response.PrincipalDto" %>
+<%@ page import="com.example.pentagonUniv.domain.user.dto.PrincipalDto" %>
 <%@ page import="com.example.pentagonUniv._global.utils.Define" %>
 <%@ page import="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" %>
 <%
