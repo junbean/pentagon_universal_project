@@ -42,7 +42,7 @@ public class UserController {
     public String home(Model model) {
         PrincipalDto principal = (PrincipalDto) session.getAttribute(Define.PRINCIPAL);
         if (principal != null) {
-            UserInfoDto userInfo = userService.readStudentInfo(principal.getId());
+            UserInfoDto userInfo = userService.findById(principal.getUserNumber());
             model.addAttribute("userInfo", userInfo);
         }
         return "main";

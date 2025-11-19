@@ -120,13 +120,13 @@
 									<!-- 마이페이지 버튼을 님 환영합니다 글자 옆에 배치 -->
 									<div class="text-end">
                                                         <c:choose>
-                                                            <c:when test="${principal.userRole eq 'staff'}">
+                                                            <c:when test="${principal.userType eq 'STAFF'}">
                                                                 <a href="/info/staff" class="btn--confirm ">마이페이지</a>
                                                             </c:when>
-                                                            <c:when test="${principal.userRole eq 'student'}">
+                                                            <c:when test="${principal.userType eq 'STUDENT'}">
                                                                 <a href="/student/myInfo" class="btn--confirm ">마이페이지</a>
                                                             </c:when>
-                                                            <c:when test="${principal.userRole eq 'professor'}">
+                                                            <c:when test="${principal.userType eq 'PROFESSOR'}">
                                                                 <a href="/professor/info" class="btn--confirm ">마이페이지</a>
                                                             </c:when>
                                                         </c:choose>
@@ -137,10 +137,10 @@
 							<div class="row">
 							  <!-- 프로필 이미지 -->
 							  <c:choose>
-							  <c:when test="${principal.userRole eq 'student'}">
+							  <c:when test="${principal.userType eq 'STUDENT'}">
                                             <div class="col-lg-3">
                                                 <div class="info-box">
-                                                    <img src="${userInfo.setupProfilImage()}" width="200" height="200" alt="프로필 이미지" class="rounded-2">
+                                                    <img src="${userInfo.setupProfileImage()}" width="200" height="200" alt="프로필 이미지" class="rounded-2">
                                                 </div>
                                             </div>
                                             </c:when>
@@ -155,9 +155,9 @@
 										</h3>
 										<p>
 											<c:choose>
-												<c:when test="${principal.userRole eq 'staff'}">교직원</c:when>
-												<c:when test="${principal.userRole eq 'student'}">학생</c:when>
-												<c:when test="${principal.userRole eq 'professor'}">교수</c:when>
+												<c:when test="${principal.userType eq 'STAFF'}">교직원</c:when>
+												<c:when test="${principal.userType eq 'STUDENT'}">학생</c:when>
+												<c:when test="${principal.userType eq 'PROFESSOR'}">교수</c:when>
 											</c:choose>
 										</p>
 
@@ -174,7 +174,7 @@
 							</div>
 							<div class="row">
 								<c:choose>
-									<c:when test="${principal.userRole eq 'staff'}">
+									<c:when test="${principal.userType eq 'STAFF'}">
 										<div class="col-lg-3">
 											<div class="info-box">
 												<h3>
@@ -184,7 +184,7 @@
 													<c:when test="${breakSize > 0}">
 														<div class="main--page--info">
 															<p class="info-link">
-																<a href="/break/list/staff">💡 처리되지 않은 휴학 신청이 존재합니다.</a>
+																<a href="/break/list/STAFF">💡 처리되지 않은 휴학 신청이 존재합니다.</a>
 															</p>
 
 														</div>
@@ -260,7 +260,7 @@
 
 		<!-- ======= Why Us Section ======= -->
 		<c:choose>
-			<c:when test="${principal.userRole eq 'student'}">
+			<c:when test="${principal.userType eq 'STUDENT'}">
 				<section id="why-us" class="why-us">
 					<div class="container" data-aos="fade-up">
 
@@ -317,7 +317,7 @@
 
 										</div>
 			</c:when>
-			<c:when test="${principal.userRole eq 'professor'}">
+			<c:when test="${principal.userType eq 'PROFESSOR'}">
 				<section id="why-us" class="why-us">
 					<div class="container" data-aos="fade-up">
 						<div class="row">
@@ -367,7 +367,7 @@
 											</div>
 										</div>
 			</c:when>
-			<c:when test="${principal.userRole eq 'staff'}">
+			<c:when test="${principal.userType eq 'STAFF'}">
 				<section id="why-us" class="why-us">
 					<div class="container" data-aos="fade-up">
 						<div class="row">
@@ -434,7 +434,7 @@
 
 				<div class="row" data-aos="zoom-in" data-aos-delay="100">
 					<c:choose>
-						<c:when test="${principal.userRole eq 'student'}">
+						<c:when test="${principal.userType eq 'STUDENT'}">
 							<div class="col-lg-3 col-md-4">
 								<div class="icon-box">
 									<i class="ri-store-line" style="color: #ffbb2c;"></i>
@@ -504,7 +504,7 @@
 								</div>
 							</div>
 						</c:when>
-						<c:when test="${principal.userRole eq 'professor'}">
+						<c:when test="${principal.userType eq 'PROFESSOR'}">
 							<div class="col-lg-3 col-md-4">
 								<div class="icon-box">
 									<i class="ri-store-line" style="color: #ffbb2c;"></i>
@@ -531,7 +531,7 @@
 							</div>
 
 						</c:when>
-						<c:when test="${principal.userRole eq 'staff'}">
+						<c:when test="${principal.userType eq 'STAFF'}">
 							<div class="col-lg-3 col-md-4">
 								<div class="icon-box">
 									<i class="ri-store-line" style="color: #ffbb2c;"></i>

@@ -8,14 +8,14 @@
         </div>
         <ul class="list-group list-group-flush">
             <c:choose>
-                <c:when test="${principal.userRole.equals(\"student\")}">
+                <c:when test="${principal.userType.equals(\"STUDENT\")}">
                     <li class="list-group-item p-3">
                         <a href="/student/myInfo" class="text-dark d-flex align-items-center">
                              내 정보 조회
                         </a>
                     </li>
                 </c:when>
-                <c:when test="${principal.userRole.equals(\"professor\")}">
+                <c:when test="${principal.userType.equals(\"PROFESSOR\")}">
                     <li class="list-group-item p-3">
                         <a href="/professor/info" class="text-dark d-flex align-items-center">
                              내 정보 조회
@@ -35,7 +35,7 @@
                     비밀번호 변경
                 </a>
             </li>
-            <c:if test="${principal.userRole.equals(\"student\")}">
+            <c:if test="${principal.userType.equals(\"STUDENT\")}">
                 <li class="list-group-item p-3">
                     <a href="/student/leaveOfAbsence" class="text-dark d-flex align-items-center">
                         휴학 신청

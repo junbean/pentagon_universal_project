@@ -12,6 +12,6 @@
 
     <!--  로그인 성공시 세션 저장  -->
 	<select id="findById" resultType="com.example.pentagonUniv.domain.user.dto.UserInfoDto">
-		<![CDATA[SELECT * FROM pu_user WHERE id = #{userId}	]]>
+		<![CDATA[SELECT * FROM pu_user WHERE user_number = #{userId}	]]>
 	</select>
 </mapper>

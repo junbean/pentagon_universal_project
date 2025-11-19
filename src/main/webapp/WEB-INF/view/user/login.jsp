@@ -25,7 +25,7 @@
         <div class="id--container">
           <div class="login--id">
             <label for="userId"><span class="material-symbols-outlined">person</span></label>
-            <input type="number" max="2147483647" name="id" id="userId" placeholder="아이디를 입력하세요" required value="${cookie.id.value}">
+            <input type="number" max="2147483647" name="userNumber" id="userId" placeholder="아이디를 입력하세요" required value="${cookie.id.value}">
           </div>
         </div>
         <div class="pwd--container">
@@ -57,9 +57,9 @@
     </form>
     <div class="test-credentials">
       <h4>테스트용 아이디</h4>
-      <p>학생: 2024000001</p>
-      <p>교수: 24000001</p>
-      <p>관리자: 240001</p>
+      <p>학생: 20250001</p>
+      <p>교수: 30001</p>
+      <p>관리자: 40001</p>
       <br/>
       <h4>테스트용 비밀번호</h4>
       <p>123123</p>

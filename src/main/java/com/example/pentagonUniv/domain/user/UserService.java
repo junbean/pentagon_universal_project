@@ -37,14 +37,8 @@ public class UserService {
     }
 
 
-	@Transactional
-	public StudentInfoDto readStudentInfo(Long id) {
-		StudentInfoDto studentEntity = userRepository.selectStudentInfoById(id);
-		return studentEntity;
-	}
 
-
-
+    @Transactional
     public UserInfoDto findById(Long userId) {
         UserInfoDto userInfoDto = userRepository.findById(userId);
         return userInfoDto;
