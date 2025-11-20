@@ -321,3 +321,17 @@ CREATE TABLE pu_payment (
  payment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
  PRIMARY KEY (id)
 );
+
+-- 증명서 발급 테이블
+CREATE TABLE pu_certificate (
+   id BIGINT PRIMARY KEY AUTO_INCREMENT,
+   student_id BIGINT NOT NULL,
+   certificate_type VARCHAR(20) NOT NULL COMMENT '증명서 타입 (재학증명서, 성적증명서 등)',
+   issued_date DATE NOT NULL COMMENT '발급일',
+   status VARCHAR(10) DEFAULT '발급' COMMENT '발급, 취소',
+   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+   FOREIGN KEY (student_id) REFERENCES pu_user(id) ON DELETE CASCADE
+);
+
+-- 인덱스 추가 (학생별 증명서 조회 성능)
+CREATE INDEX idx_student_certificate ON pu_certificate(student_id, certificate_type);
