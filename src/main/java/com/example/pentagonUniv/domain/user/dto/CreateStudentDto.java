@@ -1,4 +1,4 @@
-package com.example.pentagonUniv.domain.dto;
+package com.example.pentagonUniv.domain.user.dto;
 
 import jakarta.validation.constraints.*;
 import lombok.Data;
@@ -33,7 +33,7 @@ public class CreateStudentDto {
     private String email;
     private String originFileName;
     private String uploadFileName;
-    private MultipartFile profilImage;
+    private MultipartFile profileImage;
 
 
 }

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page import="com.example.pentagonUniv.domain.dto.response.PrincipalDto" %>
+<%@ page import="com.example.pentagonUniv.domain.user.dto.PrincipalDto" %>
 <%@ page import="com.example.pentagonUniv._global.utils.Define" %>
 
 <!DOCTYPE html>
@@ -75,7 +75,7 @@ body {
 		<nav id="navbar" class="navbar order-last order-lg-0">
 			<!-- role == student 일 경우-->
 			<c:choose>
-				<c:when test="${principal.userRole.equals(\"student\")}">
+				<c:when test="${principal.userType.equals(\"STUDENT\")}">
 					<ul>
 						<li><a class="active" href="/">Home</a></li>
 
@@ -119,7 +119,7 @@ body {
 						
 					</ul>
 				</c:when>
-				<c:when test="${principal.userRole.equals(\"staff\")}">
+				<c:when test="${principal.userType.equals(\"STAFF\")}">
 
 					<!-- role == staff 일 경우 -->
 					<ul>
@@ -164,11 +164,11 @@ body {
 							</ul></li>
 						<li><a href="/campusMap">캠퍼스 맵</a></li>
 						<li><a href="/community/list">커뮤니티</a></li>
-					
+
 					</ul>
 				</c:when>
 
-				<c:when test="${principal.userRole.equals(\"professor\")}">
+				<c:when test="${principal.userType.equals(\"PROFESSOR\")}">
 					<!-- role == professor 일 경우 -->
 					<ul>
 						<li><a class="active" href="/">Home</a></li>
@@ -223,19 +223,19 @@ body {
 				<c:when test="${principal != null}">
 					<div class="user-details">
 						<c:choose>
-							<c:when test="${principal.userRole.equals(\"student\")}">
+							<c:when test="${principal.userType.equals(\"STUDENT\")}">
 								<a href="/student/myInfo" class="get-started-btn"
 									data-bs-placement="bottom" data-bs-toggle="popover"
 									data-bs-content="${popoverContent}">${principal.name}(${principal.id})
 									님</a>
 							</c:when>
-							<c:when test="${principal.userRole.equals(\"staff\")}">
+							<c:when test="${principal.userType.equals(\"STAFF\")}">
 								<a href="/info/staff" class="get-started-btn"
 									data-bs-placement="bottom" data-bs-toggle="popover"
 									data-bs-content="${popoverContent}">${principal.name}(${principal.id})
 									님</a>
 							</c:when>
-							<c:when test="${principal.userRole.equals(\"professor\")}">
+							<c:when test="${principal.userType.equals(\"PROFESSOR\")}">
 								<a href="/professor/info" class="get-started-btn"
 									data-bs-placement="bottom" data-bs-toggle="popover"
 									data-bs-content="${popoverContent}">${principal.name}(${principal.id})

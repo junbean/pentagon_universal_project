@@ -2,7 +2,8 @@ package com.example.pentagonUniv._global.handler;
 
 import com.example.pentagonUniv._global.handler.exception.UnAuthorizedException;
 import com.example.pentagonUniv._global.utils.Define;
-import com.example.pentagonUniv.domain.dto.response.PrincipalDto;
+import com.example.pentagonUniv.domain.user.dto.PrincipalDto;
+import com.example.pentagonUniv.domain.user.UserType;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -29,7 +30,7 @@ public class UserRoleAuthIntercepterForStaff implements HandlerInterceptor {
             throws Exception {
         HttpSession session = request.getSession();
         PrincipalDto principal = (PrincipalDto) session.getAttribute(Define.PRINCIPAL);
-        if (!"staff".equals(principal.getUserRole())) {
+        if (!UserType.STAFF.equals(principal.getUserType())) {
             throw new UnAuthorizedException("접근 권한이 없습니다. 관리자 전용 페이지", HttpStatus.UNAUTHORIZED, "/");
         }
         return true;

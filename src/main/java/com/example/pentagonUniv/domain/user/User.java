@@ -1,23 +1,21 @@
-package com.example.pentagonUniv.domain.dto.response;
+package com.example.pentagonUniv.domain.user;
 
 import lombok.Data;
 
 /**
- * packageName    : com.cyber.university.dto.response
- * fileName       : PrincipalDto
+ * packageName    : com.cyber.university.repository.model
+ * fileName       : User
  * author         : 이준혁
  * date           : 2024/03/10
- * description    :
+ * description    : 유저 모델
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
  * 2024/03/10          이준혁       최초 생성
  */
-
 @Data
-public class PrincipalDto {
-    private Integer id;
+public class User {
+    private Long id;
     private String password;
     private String userRole;
-    private String name;
 }
