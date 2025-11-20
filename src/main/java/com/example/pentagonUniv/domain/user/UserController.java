@@ -35,8 +35,6 @@ public class UserController {
 
     /**
      * 메인 홈페이지
-     *
-     * @author 이준혁
      */
     @GetMapping("/")
     public String home(Model model) {
@@ -48,16 +46,22 @@ public class UserController {
         return "main";
     }
 
-
+    /**
+     * 로그인 화면
+     */
     @GetMapping("/login")
     public String login() {
         return "/user/login";
     }
 
+    /**
+     * 로그인 처리
+     */
     @PostMapping("/login")
-    public String signInProc(@Valid LoginDto loginDto, BindingResult bindingResult,
-                             HttpServletResponse response, HttpServletRequest request) {
-
+    public String signInProc(@Valid LoginDto loginDto,
+                             BindingResult bindingResult,
+                             HttpServletResponse response,
+                             HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             StringBuilder sb = new StringBuilder();
             bindingResult.getAllErrors().forEach(error -> {
@@ -67,6 +71,7 @@ public class UserController {
         }
 
         PrincipalDto principal = userService.login(loginDto);
+
         if ("on".equals(loginDto.getRememberId())) {
             Cookie cookie = new Cookie("id", loginDto.getUserNumber() + "");
             cookie.setMaxAge(60 * 60 * 24 * 7);
@@ -90,29 +95,28 @@ public class UserController {
 
     /**
      * 로그아웃
-     *
-     * @return 로그인 페이지
      */
     @GetMapping("/logout")
     public String logout() {
         session.invalidate();
-
         return "redirect:/login";
     }
 
     /**
-     * @return 에러페이지
+     * 에러페이지
      */
     @GetMapping("/error")
     public String handleError() {
         return "/error/errorPage";
     }
 
+    /**
+     * 패스워드 팝업
+     */
     @GetMapping("/guide")
     public String pop() {
         return "/user/passwordPop";
     }
-
 
     // 세션에서 현재 사용자의 정보를 가져오는 메서드입니다.
     private PrincipalDto getPrincipalFromSession() {

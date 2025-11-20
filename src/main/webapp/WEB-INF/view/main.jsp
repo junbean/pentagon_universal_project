@@ -1,34 +1,38 @@
-<%@page
-	import="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
- <%@ include file="/WEB-INF/view/layout/header.jsp"%>
+<%@ page import="com.example.pentagonUniv.domain.user.dto.PrincipalDto" %>
+<%@ page import="com.example.pentagonUniv._global.utils.Define" %>
+<%@ page import="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"%>
 
+<%@ include file="/WEB-INF/view/layout/header.jsp"%>
 
 <!-- jQuery CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <script>
 <!-- 비밀번호를 확인 하여 id와 비밀번호가 같으면 초기 생성된 계정임, 그래서 비밀번호 변경 팝업창을 띄우게 함 -->
-
-<%@ page import="com.example.pentagonUniv.domain.user.dto.PrincipalDto" %>
-<%@ page import="com.example.pentagonUniv._global.utils.Define" %>
-<%@ page import="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" %>
 <%
     PrincipalDto principal = (PrincipalDto) session.getAttribute(Define.PRINCIPAL);
-    if (principal != null && new BCryptPasswordEncoder().matches(principal.getId().toString(), principal.getPassword())) {
-%>
-	    function pop() {
-		    window
-			   	.open(
-					"/guide",
-					"비밀번호 변경 안내",
-					"width=600,height=400,history=no,resizable=no,status=no,scrollbars=yes,menubar=no");
-        }
-<%
+	boolean isDefaultPassword = false;
+
+	if (principal != null) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        isDefaultPassword = encoder.matches(principal.getId().toString(), principal.getPassword());
     }
 %>
+
+	var isDefaultPassword = <%= isDefaultPassword %>;
 	
+	if (isDefaultPassword) {
+		function pop() {
+			window.open(
+				"/guide",
+				"비밀번호 변경 안내",
+				"width=600,height=400,history=no,resizable=no,status=no,scrollbars=yes,menubar=no"
+			);
+		}
+	}
 </script>
 
 <style>

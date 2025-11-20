@@ -3,8 +3,6 @@ package com.example.pentagonUniv.domain.user.dto;
 import com.example.pentagonUniv.domain.user.UserType;
 import lombok.Data;
 
-
-
 @Data
 public class PrincipalDto {
     private Long id;
