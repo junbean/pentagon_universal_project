@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.pentagonUniv.domain.student.dto.StudentRepository">
+    <resultMap id="studentInfoResultMap" type="com.example.pentagonUniv.domain.student.dto.StudentInfoDto">
+        <id column="ID" property="id"/>
+        <result column="NAME" property="name"/>
+        <result column="BIRTHDATE" property="birthDate"/>
+        <result column="GENDER" property="gender"/>
+        <result column="ADDRESS" property="address"/>
+        <result column="TEL" property="tel"/>
+        <result column="EMAIL" property="email"/>
+        <result column="USERTYPE" property="userType"/>
+        <result column="ORIGINFILENAME" property="originFileName"/>
+        <result column="UPLOADFILENAME" property="uploadFileName"/>
+        <result column="DEPTID" property="deptId"/>
+        <result column="GRADE" property="grade"/>
+        <result column="SEMESTER" property="semester"/>
+        <result column="ENTRANCEDATE" property="entranceDate"/>
+        <result column="GRADUATIONDATE" property="graduationDate"/>
+    </resultMap>
+
+
+    <!--학생 정보 조회(ID)-->
+    <select id="selectStudentInfoById" parameterType="Integer" resultType="com.example.pentagonUniv.domain.student.dto.StudentInfoDto">
+        SELECT id, name,
+            birth_date as birthDate,
+            gender, address, tel, email,
+            user_type as userType, origin_file_name as originFileName,
+            upload_file_name as uploadFileName,
+            dept_id as deptId,
+            grade, semester, entrance_date as entranceDate,
+            graduation_date as graduationDate
+        FROM pu_user
+        WHERE id = #{id}
+    </select>
+</mapper>
