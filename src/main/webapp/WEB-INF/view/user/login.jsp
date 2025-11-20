@@ -6,7 +6,6 @@
   <head>
     <meta charset="UTF-8">
     <title>Login</title>
-
     <%-- google material Icons --%>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">

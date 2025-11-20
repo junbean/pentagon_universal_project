@@ -1,3 +1,4 @@
+
 -- 단과대
 CREATE TABLE pu_college
 (
@@ -5,15 +6,18 @@ CREATE TABLE pu_college
    name VARCHAR(10) NOT NULL UNIQUE
 );
 
+
 -- 학과
 CREATE TABLE pu_department
 (
    id BIGINT PRIMARY KEY AUTO_INCREMENT,
    name VARCHAR(10) NOT NULL UNIQUE,
    college_id BIGINT NOT NULL COMMENT '단과대 id',
+
    FOREIGN KEY (college_id) REFERENCES pu_college(id) ON DELETE CASCADE
 );
 ALTER TABLE pu_department AUTO_INCREMENT = 101;
+
 
 -- 사용자
 CREATE TABLE pu_user (
@@ -39,36 +43,6 @@ CREATE TABLE pu_user (
   CONSTRAINT pu_user_ibfk_1 FOREIGN KEY (dept_id) REFERENCES pu_department(id) ON DELETE CASCADE
 );
 
--- 강의실
-CREATE TABLE pu_room
-(
-   id VARCHAR(5) PRIMARY KEY,
-   college_id BIGINT NOT NULL,
-   FOREIGN KEY (college_id) REFERENCES pu_college(id) ON DELETE CASCADE
-);
-
--- 강의
-CREATE TABLE pu_subject
-(
-   id BIGINT PRIMARY KEY AUTO_INCREMENT,
-   name VARCHAR(20) NOT NULL,
-   professor_id BIGINT NOT NULL,
-   room_id VARCHAR(5),
-   dept_id BIGINT NOT NULL,
-   type VARCHAR(2) NOT NULL COMMENT '강의 구분 (전공, 교양)',
-   sub_year INT NOT NULL COMMENT '연도',
-   semester INT NOT NULL COMMENT '학기',
-   sub_day VARCHAR(1) NOT NULL COMMENT '요일',
-   start_time INT NOT NULL COMMENT '시작 시간',
-   end_time INT NOT NULL COMMENT '종료 시간',
-   grades INT NOT NULL COMMENT '이수 학점',
-   capacity INT NOT NULL COMMENT '수강 정원',
-   num_of_student INT NOT NULL DEFAULT 0 COMMENT '현재 신청 인원',
-   FOREIGN KEY (professor_id) REFERENCES pu_user(id) ON DELETE CASCADE,
-   FOREIGN KEY (room_id) REFERENCES pu_room(id) ON DELETE CASCADE,
-   FOREIGN KEY (dept_id) REFERENCES pu_department(id) ON DELETE CASCADE
-);
-ALTER TABLE pu_subject AUTO_INCREMENT = 10000;
 
 -- 환산 점수
 CREATE TABLE pu_grade
@@ -77,32 +51,107 @@ CREATE TABLE pu_grade
    grade_value FLOAT NOT NULL COMMENT '환산 점수'
 );
 
--- 수강 신청
-CREATE TABLE pu_pre_stu_sub
+
+-- 강의실
+CREATE TABLE pu_room
 (
-   student_id BIGINT,
-   subject_id BIGINT,
-   PRIMARY KEY (student_id, subject_id),
-   FOREIGN KEY (student_id) REFERENCES pu_user(id) ON DELETE CASCADE,
-   FOREIGN KEY (subject_id) REFERENCES pu_subject(id) ON DELETE CASCADE
+   room_id VARCHAR(5) PRIMARY KEY,
+   college_id BIGINT NOT NULL,
+
+   FOREIGN KEY (college_id) REFERENCES pu_college(id) ON DELETE CASCADE
 );
 
--- 수강 내역
-CREATE TABLE pu_stu_sub (
-  id BIGINT NOT NULL AUTO_INCREMENT,
-  student_id BIGINT DEFAULT NULL,
-  subject_id BIGINT DEFAULT NULL,
-  grade VARCHAR(2) DEFAULT NULL COMMENT '신청 학점 (평점)',
-  complete_grade INT DEFAULT NULL COMMENT '이수 학점',
-  evaluation_id BIGINT DEFAULT NULL,
-  PRIMARY KEY (id),
-  KEY student_id (student_id),
-  KEY subject_id (subject_id),
-  KEY grade (grade),
-  CONSTRAINT pu_stu_sub_ibfk_1 FOREIGN KEY (student_id) REFERENCES pu_user(id) ON DELETE CASCADE,
-  CONSTRAINT pu_stu_sub_ibfk_2 FOREIGN KEY (subject_id) REFERENCES pu_subject(id) ON DELETE CASCADE,
-  CONSTRAINT pu_stu_sub_ibfk_3 FOREIGN KEY (grade) REFERENCES pu_grade(grade)
+
+-- 강의
+CREATE TABLE pu_course
+(
+    course_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    course_name VARCHAR(100) NOT NULL,
+    professor_id BIGINT NOT NULL,
+    dept_id BIGINT NOT NULL,
+    credits DECIMAL(2,1) NOT NULL,
+    max_students INT NOT NULL,
+    current_students INT NOT NULL DEFAULT 0,
+    course_type VARCHAR(20) NOT NULL CHECK (
+        course_type IN ('전공필수', '전공선택', '교양필수', '교양선택')
+    ),
+    min_grade INT CHECK (min_grade BETWEEN 1 AND 4),
+    year INT NOT NULL,
+    semester_term INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (professor_id) REFERENCES pu_user(id) ON DELETE CASCADE,
+    FOREIGN KEY (dept_id) REFERENCES pu_department(id) ON DELETE CASCADE
 );
+ALTER TABLE pu_course AUTO_INCREMENT = 10000;
+
+
+-- 강의 시간표
+CREATE TABLE pu_course_schedule
+(
+	course_schedule_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+	course_id BIGINT NOT NULL,
+	room_id VARCHAR(5) NOT NULL,
+	day_of_week VARCHAR(10) NOT NULL CHECK (
+		day_of_week IN ('월', '화', '수', '목', '금', '토')
+	),
+	start_time TIME NOT NULL,
+	end_time TIME NOT NULL,
+
+    CHECK (start_time < end_time),
+	FOREIGN KEY (course_id) REFERENCES pu_course(course_id) ON DELETE CASCADE,
+	FOREIGN KEY (room_id) REFERENCES pu_room(room_id) ON DELETE CASCADE
+);
+
+
+-- 수강 신청 기간
+CREATE TABLE pu_sugang_period(
+	sugang_period_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+	year INT NOT NULL,
+	semester_term INT NOT NULL,
+	grade INT NOT NULL CHECK (grade BETWEEN 1 AND 4),
+	start_date TIMESTAMP NOT NULL,
+	end_date TIMESTAMP NOT NULL,
+	is_active BOOLEAN DEFAULT true,
+
+    CHECK (start_date < end_date),
+    UNIQUE KEY unique_period (year, semester_term, grade)
+);
+
+
+-- 수강 신청
+CREATE TABLE pu_sugang(
+	sugang_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+	user_id BIGINT NOT NULL,
+	course_id BIGINT NOT NULL,
+	sugang_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	dropped_date TIMESTAMP NULL,
+	sugang_status VARCHAR(15) NOT NULL CHECK (
+		sugang_status IN ('수강중', '취소', '대기')
+	),
+    grade VARCHAR(5) NULL,
+    completed_credits DECIMAL(3,1) NULL,
+
+	FOREIGN KEY (user_id) REFERENCES pu_user(id) ON DELETE CASCADE,
+	FOREIGN KEY (course_id) REFERENCES pu_course(course_id) ON DELETE CASCADE
+);
+
+
+-- 수강 상세
+CREATE TABLE pu_sugang_detail
+(
+   sugang_detail_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+   sugang_id BIGINT NOT NULL,
+   absent_count INT COMMENT '결석 횟수',
+   lateness_count INT COMMENT '지각 횟수',
+   homework_score INT COMMENT '과제 점수',
+   mid_exam INT COMMENT '중간고사 점수',
+   final_exam INT COMMENT '기말고사 점수',
+   converted_mark INT COMMENT '환산점수',
+
+   FOREIGN KEY (sugang_id) REFERENCES pu_sugang(sugang_id) ON DELETE CASCADE
+);
+
 
 -- 단과대별 등록금
 CREATE TABLE pu_coll_tuit
@@ -194,32 +243,15 @@ CREATE TABLE pu_stu_stat
    FOREIGN KEY (break_app_id) REFERENCES pu_break(id) ON DELETE CASCADE
 );
 
--- 수강 상세
-CREATE TABLE pu_stu_sub_detail
-(
-   id BIGINT PRIMARY KEY,
-   student_id BIGINT NOT NULL,
-   subject_id BIGINT NOT NULL,
-   absent INT COMMENT '결석 횟수',
-   lateness INT COMMENT '지각 횟수',
-   homework INT COMMENT '과제 점수',
-   mid_exam INT COMMENT '중간고사 점수',
-   final_exam INT COMMENT '기말고사 점수',
-   converted_mark INT COMMENT '환산점수',
-   FOREIGN KEY (id) REFERENCES pu_stu_sub(id) ON DELETE CASCADE,
-   FOREIGN KEY (student_id) REFERENCES pu_user(id) ON DELETE CASCADE,
-   FOREIGN KEY (subject_id) REFERENCES pu_subject(id) ON DELETE CASCADE
-);
-
 -- 강의 계획서
 CREATE TABLE pu_syllabus
 (
-   subject_id BIGINT PRIMARY KEY,
+   course_id BIGINT PRIMARY KEY,
    overview VARCHAR(255) COMMENT '수업 개요',
    objective VARCHAR(255) COMMENT '강의 목표',
    textbook VARCHAR(30) COMMENT '교재',
    program TEXT COMMENT '주별 계획',
-   FOREIGN KEY (subject_id) REFERENCES pu_subject(id) ON DELETE CASCADE
+   FOREIGN KEY (course_id) REFERENCES pu_course(course_id) ON DELETE CASCADE
 );
 
 -- 강의 평가
@@ -227,8 +259,8 @@ CREATE TABLE pu_evaluation
 (
    evaluation_id BIGINT AUTO_INCREMENT,
    student_id BIGINT,
-   subject_id BIGINT,
-   PRIMARY KEY (evaluation_id, student_id, subject_id),
+   course_id BIGINT,
+   PRIMARY KEY (evaluation_id, student_id, course_id),
    answer1 INT NOT NULL,
    answer2 INT NOT NULL,
    answer3 INT NOT NULL,
@@ -238,7 +270,7 @@ CREATE TABLE pu_evaluation
    answer7 INT NOT NULL,
    improvements VARCHAR(255) COMMENT '건의사항',
    FOREIGN KEY (student_id) REFERENCES pu_user(id) ON DELETE CASCADE,
-   FOREIGN KEY (subject_id) REFERENCES pu_subject(id) ON DELETE CASCADE
+   FOREIGN KEY (course_id) REFERENCES pu_course(course_id) ON DELETE CASCADE
 );
 
 -- 질문지
@@ -265,24 +297,38 @@ CREATE TABLE pu_schedule(
    FOREIGN KEY (staff_id) REFERENCES pu_user(id)
 );
 
--- 신청 강의
-CREATE TABLE pu_apply_sub (
-   id BIGINT NOT NULL AUTO_INCREMENT,
-   professor_id BIGINT NOT NULL,
-   name VARCHAR(30) NOT NULL COMMENT '강의 명',
-   room_id VARCHAR(5) NOT NULL COMMENT '강의실 명',
-   dept_id BIGINT NOT NULL COMMENT '학과 명',
-   type CHAR(2) NOT NULL COMMENT '전공/교양',
-   start_time INT NOT NULL COMMENT '강의 시작 시간',
-   end_time INT NOT NULL COMMENT '강의 끝나는 시간',
-   sub_year INT NOT NULL COMMENT '강의 개설 년도',
-   semester INT NOT NULL COMMENT '강의 개설 학기',
-   sub_day VARCHAR(1) NOT NULL COMMENT '강의 요일',
-   grades INT NOT NULL COMMENT '이수 학점',
-   capacity INT NOT NULL COMMENT '강의 정원 수',
-   approval CHAR(10) NOT NULL DEFAULT '미승인',
-   reason VARCHAR(1000) DEFAULT NULL,
-   PRIMARY KEY (id)
+-- 강사/직원 강의 신설
+CREATE TABLE pu_apply_course (
+    apply_course_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    professor_id BIGINT NOT NULL,
+    name VARCHAR(30) NOT NULL,
+    dept_id BIGINT NOT NULL,
+    course_type VARCHAR(20) NOT NULL CHECK (
+        course_type IN ('전공필수', '전공선택', '교양필수', '교양선택')
+    ),
+    year INT NOT NULL,
+    semester INT NOT NULL,
+    grades INT NOT NULL COMMENT '학점',
+    capacity INT NOT NULL,
+    approval CHAR(10) NOT NULL DEFAULT '미승인',
+    reason VARCHAR(1000) COMMENT '미승인 사유'
+
+    FOREIGN KEY (professor_id) REFERENCES pu_professor(professor_id),
+    FOREIGN KEY (dept_id) REFERENCES pu_department(dept_id)
+);
+
+CREATE TABLE pu_apply_course_schedule (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    apply_course_id BIGINT NOT NULL,
+    room_id VARCHAR(5) NOT NULL,
+	day_of_week VARCHAR(10) NOT NULL CHECK (
+		day_of_week IN ('월', '화', '수', '목', '금', '토')
+	),
+	start_time TIME NOT NULL,
+	end_time TIME NOT NULL,
+
+    FOREIGN KEY (apply_course_id) REFERENCES pu_apply_sub(apply_course_id),
+    FOREIGN KEY (room_id) REFERENCES pu_room(room_id)
 );
 
 -- 커뮤니티
