@@ -5,7 +5,6 @@ import com.example.pentagonUniv._global.utils.Define;
 import com.example.pentagonUniv.domain.user.dto.LoginDto;
 import com.example.pentagonUniv.domain.user.dto.UserInfoDto;
 import com.example.pentagonUniv.domain.user.dto.PrincipalDto;
-import com.example.pentagonUniv.domain.student.dto.StudentInfoDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -35,8 +34,6 @@ public class UserService {
 
         return userEntity;
     }
-
-
 
     @Transactional
     public UserInfoDto findById(Long userId) {

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.pentagonUniv.domain.stu_state.StudentStateRepository">
+
+    <!-- 학적 등록 -->
+    <insert id="createStuState">
+        insert into pu_stu_stat (student_id,status,from_date,to_date,break_app_id) 
+        values (#{studentId},#{status},#{fromDate},#{toDate},#{breakAppId})
+    </insert>
+</mapper>

@@ -186,7 +186,7 @@ CREATE TABLE pu_stu_stat
 (
    id BIGINT PRIMARY KEY AUTO_INCREMENT,
    student_id BIGINT NOT NULL,
-   status VARCHAR(3) NOT NULL DEFAULT '재학',
+   status ENUM('ENROLLED','LEAVE') NOT NULL DEFAULT 'ENROLLED',
    from_date DATE,
    to_date DATE,
    break_app_id BIGINT,

@@ -389,7 +389,7 @@
 
 												<h4>학생등록</h4>
 												<div class="text-center">
-													<a href="/user/student" class="more-btn">바로가기 <i
+													<a href="/student/studentRegister" class="more-btn">바로가기 <i
 														class="bx bx-chevron-right"></i></a>
 												</div>
 											</div>

@@ -45,6 +45,11 @@
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
 	rel="stylesheet">
 
+<!-- 스프링 부트 min.css 가져오기 -->
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+	rel="stylesheet">
+
 <style>
 body {
 	font-family: 'Noto Sans KR', sans-serif; /* 웹폰트 적용 */
