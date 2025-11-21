@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.pentagonUniv.domain.breakapp.repository.StuStatRepository">
+
+  <resultMap id="StuStatMap" type="com.example.pentagonUniv.domain.stustat.StuStat">
+    <id     property="id"         column="id"/>
+    <result property="studentId"  column="student_id"/>
+    <result property="status"     column="status"
+            javaType="com.example.pentagonUniv.domain.stustat.StuStatus"/>
+    <result property="fromDate"   column="from_date"/>
+    <result property="toDate"     column="to_date"/>
+    <result property="breakAppId" column="break_app_id"/>
+  </resultMap>
+
+  <insert id="insert" parameterType="com.example.pentagonUniv.domain.stustat.StuStat"
+          useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO pu_stu_stat (student_id, status, from_date, to_date, break_app_id)
+    VALUES (#{studentId}, #{status}, #{fromDate}, #{toDate}, #{breakAppId})
+  </insert>
+
+  <select id="findCurrent" resultMap="StuStatMap">
+    SELECT *
+    FROM pu_stu_stat
+    WHERE student_id = #{studentId}
+    ORDER BY (CASE WHEN to_date IS NULL THEN 0 ELSE 1 END), from_date DESC
+    LIMIT 1
+  </select>
+
+  <update id="closeCurrent">
+    UPDATE pu_stu_stat
+    SET to_date = #{toDate}
+    WHERE student_id = #{studentId}
+      AND to_date IS NULL
+  </update>
+
+</mapper>

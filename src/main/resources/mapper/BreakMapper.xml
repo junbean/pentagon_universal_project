@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.example.pentagonUniv.domain.breakapp.repository.BreakRepository">
+
+  <!-- enum ↔ varchar 매핑 -->
+  <resultMap id="BreakAppMap" type="com.example.pentagonUniv.domain.breakapp.BreakApp">
+    <id     property="id"         column="id"/>
+    <result property="studentId"  column="student_id"/>
+    <result property="action"     column="action"     javaType="com.example.pentagonUniv.domain.breakapp.BreakAction"/>
+    <result property="reasonType" column="reason_type" javaType="com.example.pentagonUniv.domain.breakapp.BreakReasonType"/>
+    <result property="reasonText" column="reason_text"/>
+    <result property="fromYear"   column="from_year"/>
+    <result property="fromSemester" column="from_semester"/>
+    <result property="toYear"     column="to_year"/>
+    <result property="toSemester" column="to_semester"/>
+    <result property="appDate"    column="app_date"/>
+    <result property="status"     column="status"     javaType="com.example.pentagonUniv.domain.breakapp.BreakStatus"/>
+  </resultMap>
+
+  <insert id="insert" parameterType="com.example.pentagonUniv.domain.breakapp.BreakApp" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO pu_break
+      (student_id, action, reason_type, reason_text, from_year, from_semester, to_year, to_semester, status)
+    VALUES
+      (#{studentId}, #{action}, #{reasonType}, #{reasonText}, #{fromYear}, #{fromSemester}, #{toYear}, #{toSemester}, 'PENDING')
+  </insert>
+
+  <select id="findById" resultMap="BreakAppMap">
+    SELECT * FROM pu_break WHERE id = #{id}
+  </select>
+
+  <select id="findByStudentId" resultMap="BreakAppMap">
+    SELECT * FROM pu_break WHERE student_id = #{studentId} ORDER BY app_date DESC
+  </select>
+
+  <select id="findByStatus" resultMap="BreakAppMap">
+    SELECT * FROM pu_break WHERE status = #{status} ORDER BY app_date ASC
+  </select>
+
+  <update id="updateStatus">
+    UPDATE pu_break SET status = #{status} WHERE id = #{id}
+  </update>
+</mapper>
