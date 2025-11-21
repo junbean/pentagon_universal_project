@@ -1,3 +1,0 @@
-public enum BreakReasonType { 
-    GENERAL, PREGNANCY, ILLNESS, STARTUP, MILITARY 
-} // 일반, 임신, 병, 창업, 군대
