@@ -359,9 +359,9 @@
 											<div class="icon-box mt-4 mt-xl-0">
 												<i class="bx bx-edit"></i>
 
-												<h4>강의 등록</h4>
+												<h4>강의 계획서 </br>등록</h4>
 												<div class="text-center">
-													<a href="/professor/apply" class="more-btn">바로가기 <i
+													<a href="/professor/syllabus/${principal.id}" class="more-btn">바로가기 <i
 														class="bx bx-chevron-right"></i></a>
 												</div>
 											</div>

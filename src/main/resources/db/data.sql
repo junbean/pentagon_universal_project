@@ -38,8 +38,8 @@ INSERT INTO pu_room (id, college_id) VALUES
 -- 8. 강의
 INSERT INTO pu_subject (id, name, professor_id, room_id, dept_id, type, sub_year, semester, sub_day, start_time, end_time, grades, capacity)
 VALUES
-(10000, '자료구조', 4, 'R101', 1, '전', 2025, 1, '월', 9, 11, 3, 30),
-(10001, '전자회로', 5, 'R102', 2, '전', 2025, 1, '화', 10, 12, 3, 30);
+(10000, '자료구조', 4, 'R101', 1, '전공', 2025, 1, '월', 9, 11, 3, 30),
+(10001, '전자회로', 5, 'R102', 2, '전공', 2025, 1, '화', 10, 12, 3, 30);
 
 -- 9. 수강 신청
 INSERT INTO pu_pre_stu_sub (student_id, subject_id) VALUES

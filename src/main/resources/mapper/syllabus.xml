@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.pentagonUniv.domain.professor.syllabus.SyllabusRepository">
+
+    <select id="findAllByProfessorId" resultType="com.example.pentagonUniv.domain.professor.syllabus.dto.SyllabusResponseDto$SubjectListDto">
+        SELECT
+            S.id,
+            S.name,
+            S.professor_id,
+            S.dept_id,
+            S.type,
+            S.sub_year as subYear,
+            S.semester,
+            S.sub_day as subDay,
+            S.grades,
+            CASE WHEN SY.status = 'TEMP' THEN 0 WHEN SY.subject_id IS NULL THEN 0 ELSE 1 END AS syllabus
+        FROM pu_subject S
+        LEFT JOIN pu_syllabus SY ON S.id = SY.subject_id
+        WHERE professor_id = #{professorId}
+    </select>
+
+</mapper>
