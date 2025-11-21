@@ -18,4 +18,14 @@
 		    WHERE user_number = #{userId}
         ]]>
 	</select>
+
+    <!-- 현재 까지 등록된 학번 조회 -->
+    <select id="findMaxSequence" resultType="int">
+        SELECT 
+            CAST(SUBSTRING(MAX(user_number), 7, 3) AS INTEGER) 
+        FROM pu_user 
+        WHERE 
+            user_number LIKE CONCAT(#{year}, '%')
+    </select>
+    
 </mapper>

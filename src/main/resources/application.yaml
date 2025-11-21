@@ -16,11 +16,14 @@ spring:
     throw-exception-if-no-handler-found: true   # 처리하는 controller가 없다면 예외처리
     dispatch-options-request: false             # options 요청을 스프링이 처리하지 않음
     view:
-      prefix: /WEB-INF/view/  # jsp 파일 경로
-      suffix: .jsp            # 확장자
+      prefix: /WEB-INF/view/ # jsp 파일 경로
+      suffix: .jsp # 확장자
     hiddenmethod:
       filter:
         enabled: true         # HTML의 put, delete, patch 요청을 지원
+  web:
+    resources:
+      static-locations: "classpath:/static/,classpath:/public/,classpath:/resources/:"
   servlet:
     multipart:
       max-file-size: 20MB     # 단일 파일의 최대 크기
@@ -45,10 +48,10 @@ spring:
   application:
     name: pentagonUniv  # 애플리케이션 이름
 
-
 mybatis:
   mapper-locations:
     - classpath:/mapper/**/*.xml    # Mapper XML 파일 경로 설정
   configuration:
     map-underscore-to-camel-case: true            # Java 필드명을 카멜케이스로 자동 매핑
 
+  type-aliases-package: com.example.pentagonUniv.domain.**

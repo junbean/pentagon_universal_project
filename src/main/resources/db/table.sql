@@ -22,7 +22,7 @@ ALTER TABLE pu_department AUTO_INCREMENT = 101;
 -- 사용자
 CREATE TABLE pu_user (
   id BIGINT NOT NULL AUTO_INCREMENT COMMENT '고유 번호',
-  user_number BIGINT UNIQUE COMMENT '로그인 학번',
+  user_number VARCHAR(20) UNIQUE COMMENT '로그인 학번',
   password VARCHAR(255) NOT NULL COMMENT '비밀번호(암호화됨)',
   name VARCHAR(30) NOT NULL,
   birth_date DATE NOT NULL,
@@ -235,7 +235,7 @@ CREATE TABLE pu_stu_stat
 (
    id BIGINT PRIMARY KEY AUTO_INCREMENT,
    student_id BIGINT NOT NULL,
-   status VARCHAR(3) NOT NULL DEFAULT '재학',
+   status ENUM('ENROLLED','LEAVE') NOT NULL DEFAULT 'ENROLLED',
    from_date DATE,
    to_date DATE,
    break_app_id BIGINT,
@@ -249,9 +249,25 @@ CREATE TABLE pu_syllabus
    course_id BIGINT PRIMARY KEY,
    overview VARCHAR(255) COMMENT '수업 개요',
    objective VARCHAR(255) COMMENT '강의 목표',
-   textbook VARCHAR(30) COMMENT '교재',
-   program TEXT COMMENT '주별 계획',
-   FOREIGN KEY (course_id) REFERENCES pu_course(id) ON DELETE CASCADE
+   textbook VARCHAR(255) COMMENT '교재',
+   status VARCHAR(40) DEFAULT 'TEMP' COMMENT '임시저장(TEMP)/최종제출(COMPLETE) 상태',
+   pdf_path VARCHAR(255) COMMENT 'PDF 저장 경로',
+   week1 TEXT COMMENT '1주차 수업계획' ,
+   week2 TEXT COMMENT '2주차 수업계획' ,
+   week3 TEXT COMMENT '3주차 수업계획',
+   week4 TEXT COMMENT '4주차 수업계획',
+   week5 TEXT COMMENT '5주차 수업계획',
+   week6 TEXT COMMENT '6주차 수업계획',
+   week7 TEXT COMMENT '7주차 수업계획',
+   week8 TEXT COMMENT '8주차 수업계획',
+   week9 TEXT COMMENT '9주차 수업계획',
+   week10 TEXT COMMENT '10주차 수업계획',
+   week11 TEXT COMMENT '11주차 수업계획',
+   week12 TEXT COMMENT '12주차 수업계획',
+   week13 TEXT COMMENT '13주차 수업계획',
+   week14 TEXT COMMENT '14주차 수업계획',
+   week15 TEXT COMMENT '15주차 수업계획',
+   FOREIGN KEY (subject_id) REFERENCES pu_subject(id) ON DELETE CASCADE
 );
 
 -- 강의 평가

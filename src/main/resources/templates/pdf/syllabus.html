@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <style>
+        body {
+            font-family: "Malgun Gothic", sans-serif;
+            padding: 25px;
+            font-size: 14px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+        }
+
+        th, td {
+            border: 1px solid #444;
+            padding: 8px;
+            vertical-align: top;
+        }
+
+        th {
+            background: #f1f1f1;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+
+        /* multi-page table for weekly plan */
+        @page { size: A4; margin: 20mm; }
+
+        table.weekly {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+
+            -fs-table-paginate: paginate;
+            -fs-page-break-min-height: 1.5cm;
+        }
+
+        table.weekly th,
+        table.weekly td {
+            border: 1px solid #555;
+            padding: 6px;
+        }
+
+        table.weekly thead th {
+            background: #e2e2e2;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        table.weekly tfoot td {
+            background: #f4f4f4;
+            text-align: center;
+        }
+
+        tr, thead, tfoot {
+            page-break-inside: avoid;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>강의계획서</h1>
+
+<!-- 기본 정보 -->
+<table>
+    <tr>
+        <th>강의명</th>
+        <td>${subjectName}</td>
+        <th>담당 교수</th>
+        <td>${professorName}</td>
+    </tr>
+    <tr>
+        <th>학과명</th>
+        <td>${departmentName}</td>
+        <th>강의 구분</th>
+        <td>${lectureType}</td>
+    </tr>
+    <tr>
+        <th>연도</th>
+        <td>${year}</td>
+        <th>학기</th>
+        <td>${semester}</td>
+    </tr>
+    <tr>
+        <th>요일</th>
+        <td>${dayOfWeek}</td>
+        <th>강의 시간</th>
+        <td>${startTime} ~ ${endTime}</td>
+    </tr>
+    <tr>
+        <th>이수학점</th>
+        <td>${credit}</td>
+        <th>수강 정원</th>
+        <td>${capacity}</td>
+    </tr>
+</table>
+
+<!-- 수업 개요 -->
+<div class="section-title">수업 개요</div>
+<table>
+    <tr><td>${overview}</td></tr>
+</table>
+
+<!-- 강의 목표 -->
+<div class="section-title">강의 목표</div>
+<table>
+    <tr><td>${objective}</td></tr>
+</table>
+
+<!-- 교재 -->
+<div class="section-title">교재</div>
+<table>
+    <tr><td>${textbook}</td></tr>
+</table>
+
+<!-- 주차별 계획 -->
+<div class="section-title">주차별 강의 계획 (1~15주)</div>
+
+<table class="weekly">
+    <thead>
+    <tr>
+        <th style="width: 10%;">주차</th>
+        <th style="width: 90%;">강의 내용</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr><td>1주차</td><td>${week1}</td></tr>
+    <tr><td>2주차</td><td>${week2}</td></tr>
+    <tr><td>3주차</td><td>${week3}</td></tr>
+    <tr><td>4주차</td><td>${week4}</td></tr>
+    <tr><td>5주차</td><td>${week5}</td></tr>
+    <tr><td>6주차</td><td>${week6}</td></tr>
+    <tr><td>7주차</td><td>${week7}</td></tr>
+    <tr><td>8주차</td><td>${week8}</td></tr>
+    <tr><td>9주차</td><td>${week9}</td></tr>
+    <tr><td>10주차</td><td>${week10}</td></tr>
+    <tr><td>11주차</td><td>${week11}</td></tr>
+    <tr><td>12주차</td><td>${week12}</td></tr>
+    <tr><td>13주차</td><td>${week13}</td></tr>
+    <tr><td>14주차</td><td>${week14}</td></tr>
+    <tr><td>15주차</td><td>${week15}</td></tr>
+    </tbody>
+
+    <tfoot>
+    <tr><td colspan="2">※ 본 강의계획은 사정에 따라 변경될 수 있습니다.</td></tr>
+    </tfoot>
+</table>
+
+</body>
+</html>

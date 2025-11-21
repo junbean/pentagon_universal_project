@@ -2,6 +2,9 @@ package com.example.pentagonUniv.domain.user;
 
 import lombok.Data;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 /**
  * packageName    : com.cyber.university.repository.model
  * fileName       : User
@@ -16,6 +19,13 @@ import lombok.Data;
 @Data
 public class User {
     private Long id;
+    private String userNumber;
+    private String name;
+    private LocalDate birthDate;
+    private String gender;
+    private String address;
+    private String tel;
+    private String email;
     private String password;
-    private String userRole;
+    private UserType userType;
 }
