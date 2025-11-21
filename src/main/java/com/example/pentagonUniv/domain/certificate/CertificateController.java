@@ -2,6 +2,7 @@ package com.example.pentagonUniv.domain.certificate;
 
 import com.example.pentagonUniv._global.utils.Define;
 import com.example.pentagonUniv.domain.certificate.dto.CertificateDto;
+import com.example.pentagonUniv.domain.certificate.service.AcademicRecordService;
 import com.example.pentagonUniv.domain.certificate.service.EnrollmentCertificateService;
 import com.example.pentagonUniv.domain.user.dto.PrincipalDto;
 import jakarta.servlet.http.HttpSession;
@@ -35,6 +36,7 @@ import java.util.Map;
 public class CertificateController {
 	private final CertificateService certificateService;
 	private final EnrollmentCertificateService enrollmentCertificateService;
+	private final AcademicRecordService academicRecordService;
 	private final HttpSession session;
 
 	// 증명서 발급 페이지
@@ -113,25 +115,20 @@ public class CertificateController {
 		}
 	}
 
-	/**
-	 * 재학증명서 PDF 다운로드
-	 *
-	 * @param id 증명서 ID
-	 * @return PDF 파일
-	 */
+	// 증명서 PDF 다운로드
 	@GetMapping("/download/{id}")
-	public ResponseEntity<byte[]> downloadCertificate(@PathVariable Long id) {
+	public ResponseEntity<byte[]> downloadCertificate(@PathVariable Long id, @RequestParam(defaultValue = "재학증명서") String type) {
 		try {
-			// 증명서 조회
 			CertificateDto certificate = certificateService.getCertificateById(id);
-
-			// 증명서 타입에 따라 다른 PDF 생성 (현재는 재학증명서만)
 			byte[] pdfBytes;
 			String fileName;
 
-			if ("재학증명서".equals(certificate.getCertificateType())) {
+			if ("재학증명서".equals(type)) {
 				pdfBytes = enrollmentCertificateService.generateEnrollmentCertificatePdf(id);
 				fileName = "재학증명서_" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + ".pdf";
+			} else if ("성적증명서".equals(type)) {
+				pdfBytes = academicRecordService.generateAcademicRecords(id);
+				fileName = "성적증명서_" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + ".pdf";
 			} else {
 				throw new IllegalArgumentException("지원하지 않는 증명서 타입입니다: " + certificate.getCertificateType());
 			}
