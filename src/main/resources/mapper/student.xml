@@ -40,4 +40,15 @@
         LEFT JOIN pu_college c ON d.college_id = c.id
         WHERE u.id = #{id}
     </select>
+
+    <!--학생 성적 조회-->
+    <select id="selectStudentAcademicRecords" parameterType="Long" resultType="com.example.pentagonUniv._global.utils.pdf.dto.AcademicRecordCertificateData$AcademicRecordDto">
+        SELECT s.name as subjectName,
+            stu.grade,
+            stu.complete_grade as credits
+        FROM pu_stu_sub stu
+        JOIN pu_subject s ON stu.subject_id = s.id
+        WHERE stu.student_id = #{studentId}
+        ORDER BY s.id
+    </select>
 </mapper>
