@@ -24,15 +24,20 @@
 
     <!--학생 정보 조회(ID)-->
     <select id="selectStudentInfoById" parameterType="Integer" resultType="com.example.pentagonUniv.domain.student.dto.StudentInfoDto">
-        SELECT id, name,
-            birth_date as birthDate,
-            gender, address, tel, email,
-            user_type as userType, origin_file_name as originFileName,
-            upload_file_name as uploadFileName,
-            dept_id as deptId,
-            grade, semester, entrance_date as entranceDate,
-            graduation_date as graduationDate
-        FROM pu_user
-        WHERE id = #{id}
+        SELECT u.id,
+            u.name,
+            u.birth_date as birthDate,
+            u.gender, u.address, u.tel, u.email,
+            u.user_type as userType, u.origin_file_name as originFileName,
+            u.upload_file_name as uploadFileName,
+            u.dept_id as deptId,
+            u.grade, u.semester, u.entrance_date as entranceDate,
+            u.graduation_date as graduationDate,
+            d.name as deptName,
+            c.name as collegeName
+        FROM pu_user u
+        LEFT JOIN pu_department d ON u.dept_id = d.id
+        LEFT JOIN pu_college c ON d.college_id = c.id
+        WHERE u.id = #{id}
     </select>
 </mapper>

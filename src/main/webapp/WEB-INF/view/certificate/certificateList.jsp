@@ -175,12 +175,11 @@
     }
 
     /**
-     * 증명서 다운로드 (현재는 미구현)
+     * 증명서 PDF 다운로드
      */
     function downloadCertificate(certificateId) {
-        alert('다운로드 기능은 추후 구현 예정입니다.');
-        // 나중에 PDF 다운로드 기능 추가
-        // location.href = '/certificate/download/' + certificateId;
+        // PDF 다운로드 URL로 이동
+        location.href = '/certificate/download/' + certificateId;
     }
 
     /**
