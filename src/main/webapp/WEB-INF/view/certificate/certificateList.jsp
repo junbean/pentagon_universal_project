@@ -166,20 +166,29 @@
             html += '<td>' + cert.certificateType + '</td>';
             html += '<td>' + cert.issuedDate + '</td>';
             html += '<td><span class="status-badge ' + statusClass + '">' + cert.status + '</span></td>';
-            html += '<td><button class="download-btn" onclick="downloadCertificate(' + cert.id + ')">다운로드</button></td>';
+            html += '<td><button class="download-btn" data-id="' + cert.id + '" data-type="' + cert.certificateType + '">다운로드</button></td>';
             html += '</tr>';
         });
 
         html += '</tbody></table></div>';
         certificateList.innerHTML = html;
+
+        certificateList.addEventListener('click', function(e) {
+            if (e.target.classList.contains('download-btn')) {
+                const certificateId = e.target.getAttribute('data-id');
+                const certificateType = e.target.getAttribute('data-type');
+                downloadCertificate(certificateId, certificateType);
+            }
+        });
+
     }
 
     /**
      * 증명서 PDF 다운로드
      */
-    function downloadCertificate(certificateId) {
-        // PDF 다운로드 URL로 이동
-        location.href = '/certificate/download/' + certificateId;
+    function downloadCertificate(certificateId, certificateType) {
+        location.href = '/certificate/download/' + certificateId + '?type=' + encodeURIComponent(certificateType);
+
     }
 
     /**

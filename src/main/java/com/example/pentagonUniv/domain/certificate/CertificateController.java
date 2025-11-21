@@ -127,6 +127,7 @@ public class CertificateController {
 				pdfBytes = enrollmentCertificateService.generateEnrollmentCertificatePdf(id);
 				fileName = "재학증명서_" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + ".pdf";
 			} else if ("성적증명서".equals(type)) {
+				log.info("=== 성적증명서 PDF 발급 시작");
 				pdfBytes = academicRecordService.generateAcademicRecords(id);
 				fileName = "성적증명서_" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + ".pdf";
 			} else {
