@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.pentagonUniv.domain.college.CollegeRepository">
+
+    <!-- 단과 대학 등록 -->
+    <insert id="createCollege">
+        insert into pu_college (name) values (#{name})
+    </insert>
+
+    <!-- 전체 조회 -->
+    <select id="findAColleges" resultType="College">
+        select * from pu_college;
+    </select>
+
+    <!-- 단과 단일 조회 -->
+    <select id="findByCollege" resultType="College">
+        select * from pu_college where id = #{collegeId};
+    </select>
+</mapper>
