@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.pentagonUniv.domain.student.StudentRepository">
+    <!-- 유저 등록 -->
+    <insert id="createStudent" parameterType="StudentRequestDto" 
+        useGeneratedKeys="true" 
+        keyProperty="id" >
+        insert into pu_user (user_number,name,birth_date,gender,address,tel,email,password,dept_id,grade,semester,entrance_date,user_type) 
+        values (#{userNumber} , #{name} , #{birthDate} , #{gender} , #{address} , #{tel} , #{email} , #{password} , #{deptId}, #{grade} , #{semester} , #{entranceDate} , #{userType})
+    </insert>
+
+
+</mapper>
