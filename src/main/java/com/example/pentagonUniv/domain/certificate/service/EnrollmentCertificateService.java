@@ -33,12 +33,9 @@ public class EnrollmentCertificateService {
 		try {
 			// 증명서 조회
 			CertificateDto certificate = certificateService.getCertificateById(certificateId);
-
 			// 학생 정보 조회
 			StudentInfoDto student = studentRepository.selectStudentInfoById(certificate.getStudentId().intValue());
-			if (student == null) {
-				throw new CustomRestfullException(Define.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
-			}
+			if (student == null) throw new CustomRestfullException(Define.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
 
 			// PDF 데이터 생성
 			EnrollmentCertificateData pdfData = EnrollmentCertificateData.builder()
