@@ -3,11 +3,55 @@
 
 <jsp:include page="/WEB-INF/view/layout/header.jsp" />
 
+<style>
+    .subject-card {
+        border-radius: 10px;
+        padding: 20px;
+        background: white;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    }
+
+    .subject-table th {
+        background-color: #5fcf80;
+        color: white;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .subject-table td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .subject-table tbody tr:hover {
+        background-color: #f1f9f3;
+        transition: 0.2s;
+    }
+
+    .write-btn {
+        padding: 5px 12px;
+        background: #5fcf80;
+        color: white !important;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .write-btn:hover {
+        background: #4bb96a;
+    }
+
+    .done-text {
+        color: #888;
+        font-weight: 600;
+    }
+</style>
+
 <body id="page-top">
 <div id="wrapper">
 
     <!-- Sidebar -->
-    <jsp:include page="/WEB-INF/view/layout/professorAsidebar.jsp" />
+    <jsp:include page="../layout/professorAsidebar.jsp" />
     <!-- End Sidebar -->
 
     <!-- Content Wrapper -->
@@ -15,42 +59,51 @@
 
         <!-- Main Content -->
         <div id="content">
+
             <div class="container mt-4">
+
                 <h2 class="mb-4 fw-bold text-center">강의 목록</h2>
-                <table class="table table-bordered">
-                    <thead>
+
+                <div class="subject-card">
+
+                    <table class="table table-bordered subject-table">
+                        <thead>
                         <tr>
                             <th>번호</th>
                             <th>과목코드</th>
                             <th>강의명</th>
-                            <th>강의 구분</th>
+                            <th>강의구분</th>
                             <th>강의 시간</th>
-                            <th>이수 학점</th>
-                            <th>강의 계획서</th>
+                            <th>이수학점</th>
+                            <th>강의계획서</th>
                         </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach var="subject" items="${subjectList}" varStatus="status">
-                        <tr>
-                            <td>${status.index + 1}</td>
-                            <td>${subject.id}</td>
-                            <td>${subject.name}</td>
-                            <td>${subject.type}</td>
-                            <td>${subject.subYear}학년도 / ${subject.semester}학기 / ${subject.subDay}요일</td>
-                            <td>${subject.grades}</td>
-                            <td>
-                                <c:if test="${subject.syllabus eq false}">
-                                    <a href="/professor/syllabus/create/${subject.id}">작성</a>
-                                </c:if>
+                        </thead>
 
-                                <c:if test="${subject.syllabus eq true}">
-                                    <span class="text-muted">완료</span>
-                                </c:if>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
+                        <tbody>
+                        <c:forEach var="subject" items="${subjectList}" varStatus="status">
+                            <tr>
+                                <td>${status.index + 1}</td>
+                                <td>${subject.id}</td>
+                                <td>${subject.name}</td>
+                                <td>${subject.type}</td>
+                                <td>${subject.subYear}학년도 / ${subject.semester}학기 / ${subject.subDay}요일</td>
+                                <td>${subject.grades}</td>
+
+                                <td>
+                                    <c:if test="${subject.syllabus eq false}">
+                                        <a href="/professor/syllabus/create/${subject.id}" class="write-btn">작성</a>
+                                    </c:if>
+
+                                    <c:if test="${subject.syllabus eq true}">
+                                        <span class="done-text">완료</span>
+                                    </c:if>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+
+                    </table>
+                </div>
 
             </div>
 

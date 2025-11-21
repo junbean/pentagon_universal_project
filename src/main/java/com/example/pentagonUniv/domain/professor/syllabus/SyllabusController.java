@@ -30,7 +30,7 @@ public class SyllabusController {
     }
 
     @GetMapping("/create/{id}")
-    public String syllabusForm(){
+    public String syllabusForm(Model model, @PathVariable(name = "id") Long syllabusId){
         return "/professor/syllabusForm";
     }
 }
