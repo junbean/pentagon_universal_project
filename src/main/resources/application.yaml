@@ -20,6 +20,9 @@ spring:
     hiddenmethod:
       filter:
         enabled: true # update, delete put방식으로 보내기 위한 설정
+  web:
+    resources:
+      static-locations: "classpath:/static/,classpath:/public/,classpath:/resources/:"
   servlet:
     multipart:
       max-file-size: 20MB
@@ -49,4 +52,4 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
 
-  type-aliases-package: com.example.pentagonUniv.domain
+  type-aliases-package: com.example.pentagonUniv.domain.**

@@ -2,6 +2,7 @@ package com.example.pentagonUniv.domain.user;
 
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -21,7 +22,7 @@ public class User {
     private Long id;
     private String userNumber;
     private String name;
-    private Date birthDate;
+    private LocalDate birthDate;
     private String gender;
     private String address;
     private String tel;

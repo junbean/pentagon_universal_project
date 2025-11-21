@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Param;
 public interface UserRepository {
 
     // 로그인용
-    public PrincipalDto selectByUserNumber(Long userNumber);
+    public PrincipalDto selectByUserNumber(String userNumber);
 
     // id 이용해서 user_tb에 insert
     public int insertToUser(User user);
@@ -20,6 +20,6 @@ public interface UserRepository {
     public StudentInfoDto selectStudentInfoById(Long id);
 
     // 현재 까지 입학한 년도 계산
-    int findMaxSequence(@Param("year") String year, @Param("deptCode") String deptCode);
+    Integer findMaxSequence(@Param("year") String year);
 
 }

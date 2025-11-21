@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Alias("pu_college")
 public class College {
     private Long id;
     private String name;

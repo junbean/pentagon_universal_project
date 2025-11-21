@@ -1,12 +1,11 @@
-package com.example.pentagonUniv.domain.staff;
+package com.example.pentagonUniv.domain.professor;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.pentagonUniv.domain.staff.dto.StaffRequestDto;
+import com.example.pentagonUniv.domain.professor.dto.ProfessorRequestDto;
 import com.example.pentagonUniv.domain.user.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -14,14 +13,14 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class StaffService {
-
-    private final StaffRepository staffRepository;
+public class ProfessorService {
+    private final ProfessorRepository professorRepository;
     private final UserService userService;
 
-    public void createStaff(StaffRequestDto dto){
+    @Transactional
+    public void createProfessor(ProfessorRequestDto dto){
         dto.setHireDate(LocalDate.now());
-        
+
         LocalDate birthDate = LocalDate.of(
             Integer.parseInt(dto.getBirthYear()),
             Integer.parseInt(dto.getBirthMonth()),
@@ -30,8 +29,9 @@ public class StaffService {
 
         dto.setBirthDate(birthDate);
 
-        dto.setUserNumber(userService.generateNewUserNumber(null, dto.getHireDate()));
-
-        staffRepository.createStaff(dto);
+        // 고유 번호 생성
+        dto.setUserNumber(userService.generateNewUserNumber(dto.getDeptId(), dto.getHireDate()));
+        professorRepository.createProfessor(dto);
     }
+    
 }

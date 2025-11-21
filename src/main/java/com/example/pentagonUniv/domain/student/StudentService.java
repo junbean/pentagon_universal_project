@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.pentagonUniv.domain.dept.Department;
 import com.example.pentagonUniv.domain.dept.DeptRepository;
 import com.example.pentagonUniv.domain.stu_state.StudentStateRepository;
+import com.example.pentagonUniv.domain.stu_state.StudentStatus;
 import com.example.pentagonUniv.domain.stu_state.dto.StudentStateRequestDto;
 import com.example.pentagonUniv.domain.student.dto.StudentRequestDto;
 import com.example.pentagonUniv.domain.user.UserRepository;
@@ -23,7 +24,7 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
     private final StudentStateRepository stateRepository;
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final DeptRepository deptRepository;
 
     // 학생등록
@@ -39,10 +40,17 @@ public class StudentService {
         // 학과 아이디 등록
         dto.setDeptId(department.getId());
 
-        // 기본 비밀번호로 등록 123123
-        dto.setPassword("$2a$10$hEYFZOe.PbFbVRcPZymRKuCGMU2MilAn64ZGnIqPgfwWL7JyGeKKW");
 
-        dto.setUserNumber(generateNewUserNumber(dto.getDeptId(), dto.getEntranceDate()));
+        LocalDate birthDate = LocalDate.of(
+            Integer.parseInt(dto.getBirthYear()),
+            Integer.parseInt(dto.getBirthMonth()),
+            Integer.parseInt(dto.getBirthDay())
+        );
+
+        dto.setBirthDate(birthDate);
+
+
+        dto.setUserNumber(userService.generateNewUserNumber(dto.getDeptId(), dto.getEntranceDate()));
 
         studentRepository.createStudent(dto);
 
@@ -51,21 +59,11 @@ public class StudentService {
 
         // 학생 등록
         stateRequestDto.setStudentId(dto.getId());
+        stateRequestDto.setStatus(StudentStatus.ENROLLED);
 
         // 학적 등록
         stateRepository.createStuState(stateRequestDto);
 
     }
 
-    // 고유 번호 증가
-    public String generateNewUserNumber(Long deptId, LocalDate entranceDate) {
-        String yearPrefix = String.valueOf(entranceDate.getYear());
-        String deptCode = String.format("%03d", deptId);
-
-        int maxSequence = userRepository.findMaxSequence(yearPrefix, deptCode);
-
-        int newSequence = maxSequence + 1;
-
-        return yearPrefix + deptCode + String.format("%03d", newSequence);
-    }
 }

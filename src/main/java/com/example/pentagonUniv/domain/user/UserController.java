@@ -2,6 +2,10 @@ package com.example.pentagonUniv.domain.user;
 
 import com.example.pentagonUniv._global.handler.exception.CustomRestfullException;
 import com.example.pentagonUniv._global.utils.Define;
+import com.example.pentagonUniv.domain.dept.Department;
+import com.example.pentagonUniv.domain.dept.DeptService;
+import com.example.pentagonUniv.domain.professor.ProfessorService;
+import com.example.pentagonUniv.domain.professor.dto.ProfessorRequestDto;
 import com.example.pentagonUniv.domain.user.dto.LoginDto;
 import com.example.pentagonUniv.domain.user.dto.PrincipalDto;
 import com.example.pentagonUniv.domain.user.dto.UserInfoDto;
@@ -21,6 +25,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -31,6 +36,8 @@ import java.util.stream.Collectors;
 public class UserController {
     private final UserService userService;
     private final HttpSession session;
+    private final ProfessorService professorService;
+    private final DeptService deptService;
     private final PasswordEncoder passwordEncoder;
 
     /**
@@ -124,5 +131,20 @@ public class UserController {
         return bindingResult.getAllErrors().stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .collect(Collectors.joining("\\n"));
+    }
+
+    @GetMapping("/user/professorRegister")
+    public String professor(Model model) {
+        List<Department> dept = deptService.finaByAll();
+
+        model.addAttribute("deptList",dept);
+        return "professor/professorRegister";
+    }
+
+    @PostMapping("/user/professorRegister")
+    public String createProfessor(ProfessorRequestDto dto) {
+        
+        professorService.createProfessor(dto);
+        return "redirect:/";
     }
 }

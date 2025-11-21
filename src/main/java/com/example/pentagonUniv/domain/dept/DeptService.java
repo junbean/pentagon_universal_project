@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.pentagonUniv._global.handler.exception.CustomRestfullException;
 import com.example.pentagonUniv.domain.college.College;
+import com.example.pentagonUniv.domain.dept.dto.DeptRequestDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,8 +20,8 @@ public class DeptService {
 
     // 학과 등록
     @Transactional
-    public void createDept(String name, Long collegeId) {
-        deptRepositoryl.createDept(name, collegeId);
+    public void createDept(DeptRequestDto dto) {
+        deptRepositoryl.createDept(dto);
     }
 
     // 전체 학과 조회

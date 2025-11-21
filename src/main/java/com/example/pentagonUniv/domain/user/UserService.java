@@ -7,6 +7,9 @@ import com.example.pentagonUniv.domain.user.dto.UserInfoDto;
 import com.example.pentagonUniv.domain.user.dto.PrincipalDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import java.time.LocalDate;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -40,5 +43,18 @@ public class UserService {
         UserInfoDto userInfoDto = userRepository.findById(userId);
         return userInfoDto;
     }
+
+    
+    // 고유 번호 증가
+    public String generateNewUserNumber(Long deptId, LocalDate entranceDate) {
+    String yearPrefix = String.valueOf(entranceDate.getYear());
+
+    Integer maxSequence = userRepository.findMaxSequence(yearPrefix);
+    int nextSequence = (maxSequence != null ? maxSequence : 0) + 1;
+
+    String seqStr = String.format("%04d", nextSequence);
+
+    return yearPrefix + seqStr; 
+}
 
 }

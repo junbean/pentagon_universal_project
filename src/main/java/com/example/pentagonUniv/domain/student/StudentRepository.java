@@ -1,6 +1,6 @@
 package com.example.pentagonUniv.domain.student;
-
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.example.pentagonUniv.domain.student.dto.StudentInfoDto;
 import com.example.pentagonUniv.domain.student.dto.StudentRequestDto;

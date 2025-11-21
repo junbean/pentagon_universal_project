@@ -400,7 +400,7 @@
 
 												<h4>교수등록</h4>
 												<div class="text-center">
-													<a href="/user/professor" class="more-btn">바로가기 <i
+													<a href="/user/professorRegister" class="more-btn">바로가기 <i
 														class="bx bx-chevron-right"></i></a>
 												</div>
 											</div>
@@ -411,7 +411,7 @@
 
 												<h4>직원등록</h4>
 												<div class="text-center">
-													<a href="/user/staff" class="more-btn">바로가기 <i
+													<a href="/staff/staffRegister" class="more-btn">바로가기 <i
 														class="bx bx-chevron-right"></i></a>
 												</div>
 											</div>
@@ -594,7 +594,7 @@
 									<i class="ri-file-list-3-line" style="color: #5fcf80;"></i>
 
 									<h3>
-										<a href="/department/departmentRegister">학과 등록</a>
+										<a href="/dept/deptRegister">학과 등록</a>
 									</h3>
 								</div>
 							</div>
