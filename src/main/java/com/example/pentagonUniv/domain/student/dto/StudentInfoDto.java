@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 @Data
 public class StudentInfoDto extends UserInfoDto {
-	private Integer deptId;
+	private Long deptId;
 	private Integer grade;
 	private Integer semester;
 	private LocalDate entranceDate;

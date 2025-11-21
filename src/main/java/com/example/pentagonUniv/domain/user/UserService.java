@@ -2,6 +2,8 @@ package com.example.pentagonUniv.domain.user;
 
 import com.example.pentagonUniv._global.handler.exception.CustomRestfullException;
 import com.example.pentagonUniv._global.utils.Define;
+import com.example.pentagonUniv.domain.student.StudentService;
+import com.example.pentagonUniv.domain.student.dto.StudentInfoDto;
 import com.example.pentagonUniv.domain.user.dto.LoginDto;
 import com.example.pentagonUniv.domain.user.dto.UserInfoDto;
 import com.example.pentagonUniv.domain.user.dto.PrincipalDto;
@@ -9,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -44,17 +47,23 @@ public class UserService {
         return userInfoDto;
     }
 
+    public List<StudentInfoDto> findStudentAll() {
+        List<StudentInfoDto> user = userRepository.findByAllStudentInfo();
+        return user;
+    }
+    
     
     // 고유 번호 증가
     public String generateNewUserNumber(Long deptId, LocalDate entranceDate) {
-    String yearPrefix = String.valueOf(entranceDate.getYear());
+        String yearPrefix = String.valueOf(entranceDate.getYear());
 
-    Integer maxSequence = userRepository.findMaxSequence(yearPrefix);
-    int nextSequence = (maxSequence != null ? maxSequence : 0) + 1;
+        Integer maxSequence = userRepository.findMaxSequence(yearPrefix);
+        int nextSequence = (maxSequence != null ? maxSequence : 0) + 1;
 
-    String seqStr = String.format("%04d", nextSequence);
+        String seqStr = String.format("%04d", nextSequence);
 
-    return yearPrefix + seqStr; 
-}
+        return yearPrefix + seqStr; 
+    }
+    
 
 }

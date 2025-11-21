@@ -12,5 +12,4 @@
         values (#{userNumber} , #{name} , #{birthDate} , #{gender} , #{address} , #{tel} , #{email} , #{password} , #{deptId}, #{grade} , #{semester} , #{entranceDate} , #{userType})
     </insert>
 
-
 </mapper>
