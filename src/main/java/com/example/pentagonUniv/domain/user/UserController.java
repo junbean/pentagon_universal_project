@@ -89,6 +89,11 @@ public class UserController {
             }
         }
         session.setAttribute(Define.PRINCIPAL, principal);
+        System.out.println("id : " + principal.getId() +
+                            ", username : " + principal.getUserNumber() +
+                            ", name : " + principal.getName() +
+                            ", password : " + principal.getPassword() +
+                            ", userType : " + principal.getUserType().name());
 
         return "redirect:/";
     }

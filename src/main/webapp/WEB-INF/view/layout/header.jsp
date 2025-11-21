@@ -72,7 +72,7 @@
 		<nav id="navbar" class="navbar order-last order-lg-0">
 			<c:choose>
 				<%-- role == student 일 경우 --%>
-				<c:when test="${principal.userType.equals('STUDENT')}">
+				<c:when test="${principal.userType eq 'STUDENT'}">
 					<ul>
 						<li><a class="active" href="/">Home</a></li>
 						<li class="dropdown">
@@ -133,7 +133,7 @@
 				</c:when>
 
 				<%-- role == staff 일 경우 --%>
-				<c:when test="${principal.userType.equals('STAFF')}">
+				<c:when test="${principal.userType eq 'STAFF'}">
 					<ul>
 						<li><a class="active" href="/">Home</a></li>
 						<li class="dropdown">
@@ -192,7 +192,7 @@
 				</c:when>
 
 				<%-- role == professor 일 경우 --%>
-				<c:when test="${principal.userType.equals('PROFESSOR')}">
+				<c:when test="${principal.userType eq 'PROFESSOR'}">
 					<ul>
 						<li><a class="active" href="/">Home</a></li>
 						<li class="dropdown">
@@ -249,23 +249,26 @@
 				<c:when test="${principal != null}">
 					<div class="user-details">
 						<c:choose>
-							<c:when test="${principal.userType.equals(\"STUDENT\")}">
+							<c:when test="${principal.userType.equals('STUDENT')}">
 								<a href="/student/myInfo" class="get-started-btn"
 									data-bs-placement="bottom" data-bs-toggle="popover"
-									data-bs-content="${popoverContent}">${principal.name}(${principal.id})
-									님</a>
+									data-bs-content="${popoverContent}">
+									${principal.name}(${principal.id})님
+								</a>
 							</c:when>
-							<c:when test="${principal.userType.equals(\"STAFF\")}">
+							<c:when test="${principal.userType.equals('STAFF')}">
 								<a href="/info/staff" class="get-started-btn"
 									data-bs-placement="bottom" data-bs-toggle="popover"
-									data-bs-content="${popoverContent}">${principal.name}(${principal.id})
-									님</a>
+									data-bs-content="${popoverContent}">
+									${principal.name}(${principal.id})님
+								</a>
 							</c:when>
-							<c:when test="${principal.userType.equals(\"PROFESSOR\")}">
+							<c:when test="${principal.userType.equals('PROFESSOR')}">
 								<a href="/professor/info" class="get-started-btn"
 									data-bs-placement="bottom" data-bs-toggle="popover"
-									data-bs-content="${popoverContent}">${principal.name}(${principal.id})
-									님</a>
+									data-bs-content="${popoverContent}">
+									${principal.name}(${principal.id})님
+								</a>
 							</c:when>
 						</c:choose>
 						<a href="/logout" class="get-started-btn">로그아웃</a>

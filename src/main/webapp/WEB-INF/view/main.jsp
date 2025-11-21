@@ -23,9 +23,9 @@
 %>
 
 	var isDefaultPassword = <%= isDefaultPassword %>;
-	
-	if (isDefaultPassword) {
-		function pop() {
+
+	function pop() {
+		if(isDefaultPassword) {
 			window.open(
 				"/guide",
 				"비밀번호 변경 안내",
@@ -68,16 +68,18 @@
 
 <body onLoad="javascript:pop()">
 	<!-- ======= Hero Section ======= -->
-	<section id="hero"
-		class="d-flex justify-content-center align-items-center">
-		<div class="container position-relative" data-aos="zoom-in"
+	<section id="hero" class="d-flex justify-content-center align-items-center">
+		<div class="container position-relative" 
+			data-aos="zoom-in"
 			data-aos-delay="100">
 			<h1>
-				오늘을 배우고,<br>내일을 선도합니다.
+				오늘을 배우고,<br/>
+				내일을 선도합니다.
 			</h1>
-			<br>
+			<br/>
 
 			<h2>그린 사이버대학교에 오신것을 환영합니다.</h2>
+			
 			<!-- 로그인 버튼 코드 -->
 			<c:choose>
 				<c:when test="${principal == null}">
@@ -90,7 +92,6 @@
 
 	<main id="main">
 		<c:choose>
-
 			<c:when test="${periodNumber == 0}">
 				<a href="/sugang/pre/1"><img src="/img/preapp.png" alt="예비수강신청"
 					style="width: 70%; height: 70%; display: block; margin: auto;"
