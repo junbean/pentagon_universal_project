@@ -47,7 +47,8 @@ spring:
 
 
 mybatis:
-  mapper-locations: classpath:/mapper/**/*.xml    # Mapper XML 파일 경로 설정
+  mapper-locations:
+    - classpath:/mapper/**/*.xml    # Mapper XML 파일 경로 설정
   configuration:
     map-underscore-to-camel-case: true            # Java 필드명을 카멜케이스로 자동 매핑
 

@@ -1,138 +1,156 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.example.pentagonUniv.domain.user.dto.PrincipalDto" %>
 <%@ page import="com.example.pentagonUniv._global.utils.Define" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+	
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<meta content="" name="description">
+	<meta content="" name="keywords">
 
-<title>Cyber University :: 학사관리시스템</title>
-<meta content="" name="description">
-<meta content="" name="keywords">
+	<title>Cyber University :: 학사관리시스템</title>
+	
+	<!-- Favicons -->
+	<link href="/img/favicon.png" rel="icon">
+	<link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-<!-- Favicons -->
-<link href="/img/favicon.png" rel="icon">
-<link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
+	<!-- Google Fonts -->
+	<link 
+		href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" 
+		rel="stylesheet">
 
-<!-- Google Fonts -->
-<link
-	href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-	rel="stylesheet">
+	<!-- Vendor CSS Files -->
+	<link href="/vendor/animate.css/animate.min.css" rel="stylesheet">
+	<link href="/vendor/aos/aos.css" rel="stylesheet">
+	<link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+	<link href="/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+	<link href="/vendor/remixicon/remixicon.css" rel="stylesheet">
+	<link href="/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
-<!-- Vendor CSS Files -->
-<link href="/vendor/animate.css/animate.min.css" rel="stylesheet">
-<link href="/vendor/aos/aos.css" rel="stylesheet">
-<link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="/vendor/bootstrap-icons/bootstrap-icons.css"
-	rel="stylesheet">
-<link href="/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-<link href="/vendor/remixicon/remixicon.css" rel="stylesheet">
-<link href="/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+	<!-- Template Main CSS File -->
+	<link href="/css/style.css" rel="stylesheet">
 
-<!-- Template Main CSS File -->
-<link href="/css/style.css" rel="stylesheet">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
 
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+	<!-- 구글 웹폰트 Noto Sans KR 추가 -->
+	<link 
+		href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
+		rel="stylesheet">
 
-<!-- 구글 웹폰트 Noto Sans KR 추가 -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
-	rel="stylesheet">
+	<style>
+		body {
+			/* 웹폰트 적용 */
+			font-family: 'Noto Sans KR', sans-serif; 
+		}
+	</style>
 
-<style>
-body {
-	font-family: 'Noto Sans KR', sans-serif; /* 웹폰트 적용 */
-}
-</style>
-
-
-<!-- =======================================================
-  * Template Name: Mentor
-  * Updated: Jan 29 2024 with Bootstrap v5.3.2
-  * Template URL: https://bootstrapmade.com/mentor-free-education-bootstrap-theme/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+	<!-- 
+		* Template Name: Mentor
+		* Updated: Jan 29 2024 with Bootstrap v5.3.2
+		* Template URL: https://bootstrapmade.com/mentor-free-education-bootstrap-theme/
+		* Author: BootstrapMade.com
+		* License: https://bootstrapmade.com/license/
+	-->
 </head>
 
-
-<!-- ======= 헤더시작 ======= -->
-<header id="header" class="fixed-top">
+<!-- 헤더시작 -->
+<header	header id="header" class="fixed-top">
 	<div class="container d-flex align-items-center">
 		<h1 class="logo me-auto">
-			<a href="/"> <img src="/img/logo.png" /></a>
+			<a href="/"> 
+				<img src="/img/logo.png" />
+			</a>
 		</h1>
 		<!-- Uncomment below if you prefer to use an image logo -->
 		<!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
 		<!-- user role에 따라 다르게 보이게 할것 -->
 		<nav id="navbar" class="navbar order-last order-lg-0">
-			<!-- role == student 일 경우-->
 			<c:choose>
-				<c:when test="${principal.userType.equals(\"STUDENT\")}">
+				<%-- role == student 일 경우 --%>
+				<c:when test="${principal.userType.equals('STUDENT')}">
 					<ul>
 						<li><a class="active" href="/">Home</a></li>
-
-						<li class="dropdown"><a href="#"><span>마이페이지</span> <i
-								class="bi bi-chevron-down"></i></a>
+						<li class="dropdown">
+							<a href="#">
+								<span>마이페이지</span> 
+								<i class="bi bi-chevron-down"></i>
+							</a>
 							<ul>
 								<li><a href="/student/myInfo">내 정보 조회</a></li>
 								<li><a href="/password">비밀번호 변경</a></li>
 								<li><a href="/student/leaveOfAbsence">휴학 신청</a></li>
 								<li><a href="/student/leaveOfAbsenceList">휴학 내역 조회</a></li>
 								<li><a href="/student/tuition">등록금 내역 조회</a></li>
-							</ul></li>
-						<li class="dropdown"><a href="#"><span>수업</span> <i
-								class="bi bi-chevron-down"></i></a>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a href="#">
+								<span>수업</span> 
+								<i class="bi bi-chevron-down"></i>
+							</a>
 							<ul>
 								<li><a href="/subject/list/1">전체 강의 조회</a></li>
-							</ul></li>
-
-						<li class="dropdown"><a href="#"><span>수강신청</span> <i
-								class="bi bi-chevron-down"></i></a>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a href="#">
+								<span>수강신청</span> 
+								<i class="bi bi-chevron-down"></i>
+							</a>
 							<ul>
 								<li><a href="/sugang/pre/1">예비 수강 신청</a></li>
 								<li><a href="/sugang/preAppList?type=1">수강 신청</a></li>
 								<li><a href="/sugang/list">수강 신청 내역 조회</a></li>
-							</ul></li>
-
-						<li class="dropdown"><a href="#"><span>성적</span> <i
-								class="bi bi-chevron-down"></i></a>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a href="#">
+								<span>성적</span> 
+								<i class="bi bi-chevron-down"></i>
+							</a>
 							<ul>
 								<li><a href="/student/gradeDetailList">성적 조회</a></li>
-							</ul></li>
-
-						<li class="dropdown"><a href="#"><span>학사정보</span> <i
-								class="bi bi-chevron-down"></i></a>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a href="#">
+								<span>학사정보</span> 
+								<i class="bi bi-chevron-down"></i>
+							</a>
 							<ul>
 								<li><a href="/notice">공지사항</a></li>
 								<li><a href="/schedule">학사일정</a></li>
-							</ul></li>
+							</ul>
+						</li>
 						<li><a href="/campusMap">캠퍼스 맵</a></li>
-							<li><a href="/community/list">커뮤니티</a></li>
-						
+						<li><a href="/community/list">커뮤니티</a></li>
 					</ul>
 				</c:when>
-				<c:when test="${principal.userType.equals(\"STAFF\")}">
 
-					<!-- role == staff 일 경우 -->
+				<%-- role == staff 일 경우 --%>
+				<c:when test="${principal.userType.equals('STAFF')}">
 					<ul>
 						<li><a class="active" href="/">Home</a></li>
-
-						<li class="dropdown"><a href="#"><span>마이페이지</span> <i
-								class="bi bi-chevron-down"></i></a>
+						<li class="dropdown">
+							<a href="#">
+								<span>마이페이지</span> 
+								<i class="bi bi-chevron-down"></i>
+							</a>
 							<ul>
 								<li><a href="/info/staff">내 정보 조회</a></li>
 								<li><a href="/password">비밀번호 변경</a></li>
-							</ul></li>
-						<li class="dropdown"><a href="#"><span>학사관리</span> <i
-								class="bi bi-chevron-down"></i></a>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a href="#">
+								<span>학사관리</span> 
+								<i class="bi bi-chevron-down"></i>
+							</a>
 							<ul>
 								<li><a href="/user/studentList">학생 명단 조회</a></li>
 								<li><a href="/user/professorList">교수 명단 조회</a></li>
@@ -143,65 +161,73 @@ body {
 								<li><a href="/applySubject/list">교수 강의생성 요청내역</a></li>
 								<li><a href="/break/list/staff">휴학 처리</a></li>
 								<li><a href="/sugang/period">수강 신청기간 설정</a></li>
-							</ul></li>
-
-						<li class="dropdown"><a href="#"><span>등록</span> <i
-								class="bi bi-chevron-down"></i></a>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a href="#">
+								<span>등록</span> 
+								<i class="bi bi-chevron-down"></i>
+							</a>
 							<ul>
 								<li><a href="/college/collegeRegister">단과대학 등록</a></li>
 								<li><a href="/department/departmentRegister">학과 등록</a></li>
 								<li><a href="/room/roomRegister">강의실 등록</a></li>
 								<li><a href="/staff/subject?crud=insert">강의 등록</a></li>
 								<li><a href="/staff/tuition?crud=insert">단대별 등록금 설정</a></li>
-							</ul></li>
-
-						<li class="dropdown"><a href="#"><span>학사정보</span> <i
-								class="bi bi-chevron-down"></i></a>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a href="#">
+								<span>학사정보</span> 
+								<i class="bi bi-chevron-down"></i></a>
 							<ul>
 								<li><a href="/notice">공지사항</a></li>
 								<li><a href="/schedule">학사일정</a></li>
 								<li><a href="/schedule/list">학사일정 등록</a></li>
-							</ul></li>
+							</ul>
+						</li>
 						<li><a href="/campusMap">캠퍼스 맵</a></li>
 						<li><a href="/community/list">커뮤니티</a></li>
-
 					</ul>
 				</c:when>
 
-				<c:when test="${principal.userType.equals(\"PROFESSOR\")}">
-					<!-- role == professor 일 경우 -->
+				<%-- role == professor 일 경우 --%>
+				<c:when test="${principal.userType.equals('PROFESSOR')}">
 					<ul>
 						<li><a class="active" href="/">Home</a></li>
-
-
-
-
-						<li class="dropdown"><a href="#"><span>마이페이지</span> <i
-								class="bi bi-chevron-down"></i></a>
+						<li class="dropdown">
+							<a href="#">
+								<span>마이페이지</span> 
+								<i class="bi bi-chevron-down"></i>
+							</a>
 							<ul>
 								<li><a href="/professor/info">내 정보 조회</a></li>
 								<li><a href="/password">비밀번호 변경</a></li>
-							</ul></li>
-						<li class="dropdown"><a href="#"><span>수업</span> <i
-								class="bi bi-chevron-down"></i></a>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a href="#">
+								<span>수업</span> 
+								<i class="bi bi-chevron-down"></i>
+							</a>
 							<ul>
 								<li><a href="/subject/list/1">전체 강의 조회</a></li>
 								<li><a href="/professor/mysub">내 강의 조회</a></li>
 								<li><a href="/professor/readevaluation">내 강의 평가</a></li>
 								<li><a href="/professor/apply">강의 신청</a></li>
 								<li><a href="/professor/update-list">강의 신청 목록</a></li>
-							</ul></li>
-
-
-
-
-						<li class="dropdown"><a href="#"><span>학사정보</span> <i
-								class="bi bi-chevron-down"></i></a>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a href="#">
+								<span>학사정보</span> 
+								<i class="bi bi-chevron-down"></i>
+							</a>
 							<ul>
 								<li><a href="/notice">공지사항</a></li>
 								<li><a href="/schedule">학사일정</a></li>
-							</ul></li>
-
+							</ul>
+						</li>
 						<li><a href="/campusMap">캠퍼스 맵</a></li>
 						<li><a href="/community/list">커뮤니티</a></li>
 					</ul>

@@ -10,10 +10,10 @@
 <!-- jQuery CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+<!-- 비밀번호를 확인 하여 id와 비밀번호가 같으면 초기 생성된 계정임, 그래서 비밀번호 변경 팝업창을 띄우게 함 -->	
 <script>
-<!-- 비밀번호를 확인 하여 id와 비밀번호가 같으면 초기 생성된 계정임, 그래서 비밀번호 변경 팝업창을 띄우게 함 -->
 <%
-    PrincipalDto principal = (PrincipalDto) session.getAttribute(Define.PRINCIPAL);
+	PrincipalDto principal = (PrincipalDto) session.getAttribute(Define.PRINCIPAL);
 	boolean isDefaultPassword = false;
 
 	if (principal != null) {
@@ -65,6 +65,7 @@
 	background-color: #ddd;
 }
 </style>
+
 <body onLoad="javascript:pop()">
 	<!-- ======= Hero Section ======= -->
 	<section id="hero"

@@ -18,5 +18,4 @@ public interface UserRepository {
 	public UserInfoDto findById(Long userId);
 
 	public StudentInfoDto selectStudentInfoById(Long id);
-
 }
