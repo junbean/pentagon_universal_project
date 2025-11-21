@@ -18,7 +18,7 @@ ALTER TABLE pu_department AUTO_INCREMENT = 101;
 -- 사용자
 CREATE TABLE pu_user (
   id BIGINT NOT NULL AUTO_INCREMENT COMMENT '고유 번호',
-  user_number BIGINT UNIQUE COMMENT '로그인 학번',
+  user_number VARCHAR(20) UNIQUE COMMENT '로그인 학번',
   password VARCHAR(255) NOT NULL COMMENT '비밀번호(암호화됨)',
   name VARCHAR(30) NOT NULL,
   birth_date DATE NOT NULL,
