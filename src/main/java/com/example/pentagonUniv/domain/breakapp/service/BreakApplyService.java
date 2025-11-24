@@ -23,17 +23,25 @@ public class BreakApplyService {
   private final StuStatRepository statRepo;
 
   @Transactional
-  public void apply(Long studentId, BreakApplyForm form) {
-    // 상태 검증(선택)
-    var current = statRepo.findCurrent(studentId);
-    if (form.getAction() == BreakAction.LEAVE) {
-      if (current != null && "휴학".equals(current.getStatus()))
-        throw new CustomRestfullException("이미 휴학 상태입니다.", HttpStatus.BAD_REQUEST);
-    } else { // RETURN
-      if (current == null || !"휴학".equals(current.getStatus()))
-        throw new CustomRestfullException("현재 휴학 상태가 아니어서 복학 신청이 불가합니다.", HttpStatus.BAD_REQUEST);
+public void apply(Long studentId, BreakApplyForm form) {
+
+    // 1. 이미 대기중인 신청이 있다면 차단
+    var pending = breakRepo.findPendingByStudent(studentId);
+    if (!pending.isEmpty()) {
+        throw new CustomRestfullException("이미 대기중인 신청이 있습니다.", HttpStatus.BAD_REQUEST);
     }
 
+    // 2. 현재 휴학 상태인지 확인
+    var current = statRepo.findCurrent(studentId);
+    if (form.getAction() == BreakAction.LEAVE) {
+        if (current != null && "휴학".equals(current.getStatus()))
+            throw new CustomRestfullException("이미 휴학 상태입니다.", HttpStatus.BAD_REQUEST);
+    } else { // RETURN
+        if (current == null || !"휴학".equals(current.getStatus()))
+            throw new CustomRestfullException("현재 휴학 상태가 아니어서 복학 신청이 불가합니다.", HttpStatus.BAD_REQUEST);
+    }
+
+    // 3. DB 저장
     BreakApp app = new BreakApp();
     app.setStudentId(studentId);
     app.setAction(form.getAction());
@@ -43,8 +51,9 @@ public class BreakApplyService {
     app.setFromSemester(form.getFromSemester());
     app.setToYear(form.getToYear());
     app.setToSemester(form.getToSemester());
+
     breakRepo.insert(app);
-  }
+}
 
   public List<BreakApp> myApps(Long studentId) {
     return breakRepo.findByStudentId(studentId);

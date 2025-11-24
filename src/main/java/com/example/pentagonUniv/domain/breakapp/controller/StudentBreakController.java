@@ -1,6 +1,8 @@
 package com.example.pentagonUniv.domain.breakapp.controller;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,22 +28,25 @@ public class StudentBreakController {
   @GetMapping("/apply")
   public String form(Model model) {
     model.addAttribute("form", new BreakApplyForm());
-    return "/student/breakApply"; // JSP
+    return "student/breakApply"; // JSP
   }
 
   @PostMapping("/apply")
-  public String apply(@Valid @ModelAttribute("form") BreakApplyForm form, BindingResult br) {
-    if (br.hasErrors()) throw new CustomRestfullException("입력값을 확인하세요.", org.springframework.http.HttpStatus.BAD_REQUEST);
+public String apply(@Valid @ModelAttribute("form") BreakApplyForm form, BindingResult br) {
+    if (br.hasErrors())
+        throw new CustomRestfullException("입력값을 확인하세요.", HttpStatus.BAD_REQUEST);
+
     var p = (PrincipalDto) session.getAttribute(Define.PRINCIPAL);
     service.apply(p.getId().longValue(), form);
-    return "redirect:/student/breakList";
-  }
+
+    return "redirect:/student/break/list";
+}
 
   @GetMapping("/list")
   public String list(Model model) {
     var p = (PrincipalDto) session.getAttribute(Define.PRINCIPAL);
     model.addAttribute("list", service.myApps(p.getId().longValue()));
-    return "/student/breakList"; // JSP
+    return "student/breakList"; // JSP
   }
 }
 

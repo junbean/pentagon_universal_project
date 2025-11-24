@@ -440,7 +440,7 @@
 									<i class="ri-store-line" style="color: #ffbb2c;"></i>
 
 									<h3>
-										<a href="/student/leaveOfAbsence">휴학신청</a>
+										<a href="/student/break/apply">휴학신청</a>
 									</h3>
 								</div>
 							</div>
@@ -449,7 +449,7 @@
 									<i class="ri-bar-chart-box-line" style="color: #5578ff;"></i>
 
 									<h3>
-										<a href="/student/leaveOfAbsenceList">휴학 내역조회</a>
+										<a href="/student/break/list">휴학 내역조회</a>
 									</h3>
 								</div>
 							</div>

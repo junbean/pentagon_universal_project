@@ -42,4 +42,11 @@
   <update id="updateStatus">
     UPDATE pu_break SET status = #{status} WHERE id = #{id}
   </update>
+
+  <!-- 중복 신청 방지 -->
+  <select id="findPendingByStudent" resultMap="BreakAppMap">
+    SELECT * FROM pu_break
+    WHERE student_id = #{studentId}
+      AND status = 'PENDING'
+  </select>
 </mapper>

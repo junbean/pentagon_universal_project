@@ -17,18 +17,18 @@ public class BreakAdminController {
   @GetMapping("/pending")
   public String pending(Model model) {
     model.addAttribute("list", service.pending());
-    return "redirect:/admin/break/pending"; // JSP
+    return "/admin/breakPending"; // JSP
   }
 
   @PostMapping("/{id}/approve")
   public String approve(@PathVariable(name = "id") Long id) {
     service.approve(id);
-    return "redirect:/admin/breakPending";
+    return "redirect:/admin/break/pending";
   }
 
   @PostMapping("/{id}/reject")
   public String reject(@PathVariable(name = "id") Long id) {
     service.reject(id);
-    return "redirect:/admin/breakPending";
+    return "redirect:/admin/break/pending";
   }
 }

@@ -3,10 +3,6 @@
 <%@ page import="com.example.pentagonUniv._global.utils.Define" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
@@ -63,8 +59,6 @@ body {
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
-</head>
-
 
 <!-- ======= 헤더시작 ======= -->
 <header id="header" class="fixed-top">
@@ -88,8 +82,8 @@ body {
 							<ul>
 								<li><a href="/student/myInfo">내 정보 조회</a></li>
 								<li><a href="/password">비밀번호 변경</a></li>
-								<li><a href="/student/leaveOfAbsence">휴학 신청</a></li>
-								<li><a href="/student/leaveOfAbsenceList">휴학 내역 조회</a></li>
+								<li><a href="/student/break/apply">휴학 신청</a></li>
+								<li><a href="/student/break/list">휴학 내역 조회</a></li>
 								<li><a href="/student/tuition">등록금 내역 조회</a></li>
 							</ul></li>
 						<li class="dropdown"><a href="#"><span>수업</span> <i
@@ -145,7 +139,7 @@ body {
 								<li><a href="/user/staff">직원등록</a></li>
 								<li><a href="/tuition/bill">등록금 고지서 발송</a></li>
 								<li><a href="/applySubject/list">교수 강의생성 요청내역</a></li>
-								<li><a href="/break/list/staff">휴학 처리</a></li>
+								<li><a href="/admin/break/pending">휴학 처리</a></li>
 								<li><a href="/sugang/period">수강 신청기간 설정</a></li>
 							</ul></li>
 

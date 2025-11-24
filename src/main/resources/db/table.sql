@@ -166,19 +166,25 @@ CREATE TABLE pu_notice_file
 );
 
 -- 휴학 신청 내역
-CREATE TABLE pu_break
-(
-   id BIGINT PRIMARY KEY AUTO_INCREMENT,
-   student_id BIGINT NOT NULL,
-   student_grade INT NOT NULL,
-   from_year INT NOT NULL,
-   from_semester INT NOT NULL,
-   to_year INT NOT NULL,
-   to_semester INT NOT NULL,
-   type VARCHAR(10) NOT NULL COMMENT '일반, 임신·출산·육아, 질병, 창업, 군입대',
-   app_date DATE DEFAULT (current_date) NOT NULL COMMENT '신청 일자',
-   status ENUM('PENDING','APPROVED','REJECTED') DEFAULT 'PENDING',
-   FOREIGN KEY (student_id) REFERENCES pu_user(id) ON DELETE CASCADE
+CREATE TABLE pu_break (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    student_id BIGINT NOT NULL,
+
+    action VARCHAR(20) NOT NULL,           -- 휴학/복학
+    reason_type VARCHAR(20) NOT NULL COMMENT '일반, 임신·출산·육아, 질병, 창업, 군입대',      -- 일반/병가/임신 등
+    reason_text VARCHAR(255),              -- 상세 사유
+
+    from_year INT NOT NULL,
+    from_semester INT NOT NULL,
+    to_year INT NOT NULL,
+    to_semester INT NOT NULL,
+
+    type VARCHAR(20) NOT NULL,             -- reasonType 값이 들어가는 컬럼
+    status VARCHAR(20) NOT NULL DEFAULT 'PENDING',
+
+    app_date DATE DEFAULT CURRENT_DATE COMMENT '신청 일자',
+
+    FOREIGN KEY (student_id) REFERENCES pu_user(id) ON DELETE CASCADE
 );
 
 -- 학적 상태

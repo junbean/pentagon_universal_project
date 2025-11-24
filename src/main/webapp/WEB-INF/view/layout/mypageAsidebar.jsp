@@ -37,12 +37,12 @@
             </li>
             <c:if test="${principal.userType.equals(\"STUDENT\")}">
                 <li class="list-group-item p-3">
-                    <a href="/student/leaveOfAbsence" class="text-dark d-flex align-items-center">
+                    <a href="/student/break/apply" class="text-dark d-flex align-items-center">
                         휴학 신청
                     </a>
                 </li>
                 <li class="list-group-item p-3">
-                    <a href="/student/leaveOfAbsenceList" class="text-dark d-flex align-items-center">
+                    <a href="/student/break/list" class="text-dark d-flex align-items-center">
                        휴학 내역 조회
                     </a>
                 </li>
