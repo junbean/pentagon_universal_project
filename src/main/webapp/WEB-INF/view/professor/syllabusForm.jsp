@@ -3,33 +3,34 @@
 
 <%@ include file="/WEB-INF/view/layout/header.jsp"%>
 
-<body>
+<style>
+    textarea.form-control {
+        resize: none;
+        height: 120px;
+    }
 
-<!-- ======= Hero Section ======= -->
-<section id="hero" class="d-flex justify-content-center align-items-center">
-    <div class="container position-relative" data-aos="zoom-in" data-aos-delay="100">
-        <h1>
-            강의계획서 작성<br>
-            <span style="font-size: 22px;">${subject.name}</span>
-        </h1>
-    </div>
-</section>
-<!-- End Hero -->
+    .week-textarea {
+        resize: none;
+        height: 70px !important;
+    }
+</style>
+
+<body>
 
 <main id="main">
 
     <!-- ===================== 강의계획서 작성 Form ===================== -->
-    <section id="syllabus-create" class="courses">
-        <div class="container" data-aos="fade-up">
+    <section id="syllabus-create" class="courses" style="padding-top: 150px;">
+        <div class="container">
 
             <div class="section-title">
                 <h2>Syllabus</h2>
                 <p>강의계획서 등록</p>
             </div>
 
-            <form action="/professor/syllabus/create" method="post" enctype="multipart/form-data">
+            <form action="/professor/syllabus/create/${subject.id}" method="post">
 
-                <input type="hidden" name="subject_id" value="${subject.id}">
+                <input type="hidden" name="subjectId" value="${subject.id}">
 
                 <!-- 기본 정보 -->
                 <div class="card mb-4">
@@ -43,17 +44,17 @@
 
                         <div class="mb-3">
                             <label class="form-label">수업 개요</label>
-                            <textarea name="overview" class="form-control" rows="3" required></textarea>
+                            <textarea name="overview" class="form-control" required>${syllabus.overview}</textarea>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">강의 목표</label>
-                            <textarea name="objective" class="form-control" rows="3" required></textarea>
+                            <textarea name="objective" class="form-control" required>${syllabus.objective}</textarea>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">교재</label>
-                            <input type="text" name="textbook" class="form-control" required>
+                            <input type="text" name="textbook" class="form-control" value="${syllabus.textbook}" required>
                         </div>
 
                     </div>
@@ -66,9 +67,10 @@
 
                         <div class="row">
                             <c:forEach var="i" begin="1" end="15">
-                                <div class="col-md-6 mb-3">
+                                <c:set var="weekKey" value="${'week' += i}" />
+                                <div class="col-12 mb-3">
                                     <label class="form-label">${i}주차</label>
-                                    <textarea name="week${i}" class="form-control" rows="2" required></textarea>
+                                    <textarea name="week${i}" class="form-control week-textarea" required>${syllabus[weekKey]}</textarea>
                                 </div>
                             </c:forEach>
                         </div>

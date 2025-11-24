@@ -10,7 +10,7 @@ public class SyllabusRequestDto {
     @Getter
     @ToString
     public static class CreateSyllabus{
-        private Long subject_id; // PK / FK
+        private Long subjectId; // PK / FK
         private String overview; // 수업개요
         private String objective; // 강의목표
         private String textbook; // 교재

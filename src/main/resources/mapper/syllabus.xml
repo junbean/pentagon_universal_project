@@ -25,10 +25,60 @@
     <insert id="insertSyllabus" parameterType="com.example.pentagonUniv.domain.professor.syllabus.dto.SyllabusRequestDto$CreateSyllabus">
         INSERT INTO pu_syllabus ( subject_id, overview, objective, textbook, status, pdf_path,
         week1, week2, week3, week4, week5, week6, week7, week8, week9, week10, week11, week12, week13, week14, week15 )
-        VALUES ( #{subject_id}, #{overview}, #{objective}, #{textbook}, #{status}, #{pdf_path}, #{week1}, #{week2},
+        VALUES ( #{subjectId}, #{overview}, #{objective}, #{textbook}, #{status}, #{pdf_path}, #{week1}, #{week2},
         #{week3}, #{week4}, #{week5}, #{week6}, #{week7}, #{week8}, #{week9}, #{week10}, #{week11}, #{week12}, #{week13},
         #{week14}, #{week15}
         );
     </insert>
 
+    <select id="findSyllabus" resultType="com.example.pentagonUniv.domain.professor.syllabus.dto.SyllabusRequestDto$CreateSyllabus">
+        SELECT *
+        FROM pu_syllabus
+        WHERE subject_id = #{subjectId}
+    </select>
+
+    <select id="findSubject" resultType="com.example.pentagonUniv.domain.professor.dto.SubjectDto">
+        SELECT *
+        FROM pu_subject
+        WHERE id = #{subjectId}
+    </select>
+
+    <update id="updateSyllabus" parameterType="com.example.pentagonUniv.domain.professor.syllabus.dto.SyllabusRequestDto$CreateSyllabus">
+        UPDATE pu_syllabus
+        SET
+        overview = #{overview},
+        objective = #{objective},
+        textbook = #{textbook},
+        status = #{status},
+        pdf_path = #{pdf_path},
+        week1 = #{week1},
+        week2 = #{week2},
+        week3 = #{week3},
+        week4 = #{week4},
+        week5 = #{week5},
+        week6 = #{week6},
+        week7 = #{week7},
+        week8 = #{week8},
+        week9 = #{week9},
+        week10 = #{week10},
+        week11 = #{week11},
+        week12 = #{week12},
+        week13 = #{week13},
+        week14 = #{week14},
+        week15 = #{week15}
+        WHERE subject_id = #{subjectId};
+    </update>
+
+    <select id="existsSyllabus" resultType="int">
+        SELECT COUNT(*)
+        FROM pu_syllabus
+        WHERE subject_id = #{syllabusId}
+    </select>
+
+    <update id="updatePdfPath">
+        UPDATE pu_syllabus
+        SET pdf_path = #{pdfPath},
+        status = 'COMPLETE'
+        WHERE subject_id = #{subjectId};
+    </update>
 </mapper>
