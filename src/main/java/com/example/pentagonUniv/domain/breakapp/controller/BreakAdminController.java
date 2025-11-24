@@ -17,7 +17,7 @@ public class BreakAdminController {
   @GetMapping("/pending")
   public String pending(Model model) {
     model.addAttribute("list", service.pending());
-    return "/admin/breakPending"; // JSP
+    return "redirect:/admin/break/pending"; // JSP
   }
 
   @PostMapping("/{id}/approve")

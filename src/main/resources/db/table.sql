@@ -177,7 +177,7 @@ CREATE TABLE pu_break
    to_semester INT NOT NULL,
    type VARCHAR(10) NOT NULL COMMENT '일반, 임신·출산·육아, 질병, 창업, 군입대',
    app_date DATE DEFAULT (current_date) NOT NULL COMMENT '신청 일자',
-   status VARCHAR(3) NOT NULL DEFAULT '처리중' COMMENT '처리중, 승인, 거부',
+   status ENUM('PENDING','APPROVED','REJECTED') DEFAULT 'PENDING',
    FOREIGN KEY (student_id) REFERENCES pu_user(id) ON DELETE CASCADE
 );
 
@@ -186,7 +186,7 @@ CREATE TABLE pu_stu_stat
 (
    id BIGINT PRIMARY KEY AUTO_INCREMENT,
    student_id BIGINT NOT NULL,
-   status VARCHAR(3) NOT NULL DEFAULT '재학',
+   status ENUM('ENROLLED','LEAVE') NOT NULL DEFAULT 'ENROLLED',
    from_date DATE,
    to_date DATE,
    break_app_id BIGINT,

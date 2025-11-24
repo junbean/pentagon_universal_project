@@ -22,9 +22,9 @@
 
   <insert id="insert" parameterType="com.example.pentagonUniv.domain.breakapp.BreakApp" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO pu_break
-      (student_id, action, reason_type, reason_text, from_year, from_semester, to_year, to_semester, status)
+    (student_id, action, reason_type, reason_text, from_year, from_semester, to_year, to_semester, type, status)
     VALUES
-      (#{studentId}, #{action}, #{reasonType}, #{reasonText}, #{fromYear}, #{fromSemester}, #{toYear}, #{toSemester}, 'PENDING')
+    (#{studentId}, #{action}, #{reasonType}, #{reasonText}, #{fromYear}, #{fromSemester}, #{toYear}, #{toSemester}, #{reasonType}, 'PENDING')
   </insert>
 
   <select id="findById" resultMap="BreakAppMap">
