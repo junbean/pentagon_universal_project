@@ -26,9 +26,24 @@
 
     <!-- 학생 조회 -->
     <select id="findByAllStudentInfo" resultType="StudentInfoDto">
-        SELECT *
-        FROM pu_user
+        SELECT u.* , 
+        d.name AS deptName,
+        c.name AS collegeName,
+        st.status AS studentStatus
+        FROM pu_user u 
+        LEFT JOIN pu_stu_stat st on st.student_id = u.id
+        LEFT JOIN pu_department d on d.id = u.dept_id
+        LEFT JOIN pu_college c on c.id = d.college_id
         WHERE user_type = 'STUDENT'
+        ORDER BY u.id DESC
+        LIMIT #{offset} , #{pageSize}
+    </select>
+
+    <!-- 전체 학생 수 -->
+    <select id="userCount" resultType="int" parameterType="userType">
+        SELECT count(*) 
+        FROM PU_USER 
+        where user_type = '${userType}'
     </select>
 
     <!-- 교수 조회 -->

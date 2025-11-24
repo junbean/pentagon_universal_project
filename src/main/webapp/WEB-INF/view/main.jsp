@@ -536,7 +536,7 @@
 								<div class="icon-box">
 									<i class="ri-store-line" style="color: #ffbb2c;"></i>
 									<h3>
-										<a href="/user/studentList">학생명단조회</a>
+										<a href="/student/studentList">학생명단조회</a>
 									</h3>
 								</div>
 							</div>

@@ -26,8 +26,12 @@ public interface UserRepository {
     Integer findMaxSequence(@Param("year") String year);
 
     // 유저 정보 조회
-    public List<StudentInfoDto> findByAllStudentInfo();
+    public List<StudentInfoDto> findByAllStudentInfo(int offset, int pageSize);
+
     public List<ProfessorInfoDto> findByAllProfessorInfo();
+
     public List<StaffInfoDto> findByAllStaffInfo();
+
+    public int userCount(UserType userType);
 
 }

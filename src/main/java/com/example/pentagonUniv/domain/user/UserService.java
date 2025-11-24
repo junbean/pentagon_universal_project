@@ -47,12 +47,17 @@ public class UserService {
         return userInfoDto;
     }
 
-    public List<StudentInfoDto> findStudentAll() {
-        List<StudentInfoDto> user = userRepository.findByAllStudentInfo();
+    // 등록된 학생 정보
+    public List<StudentInfoDto> findStudentAll(int offset, int pageSize) {
+        List<StudentInfoDto> user = userRepository.findByAllStudentInfo(offset, pageSize);
         return user;
     }
-    
-    
+
+    // 등록된 학생 수
+    public int userCount(UserType userType) {
+        return userRepository.userCount(userType);
+    }
+
     // 고유 번호 증가
     public String generateNewUserNumber(Long deptId, LocalDate entranceDate) {
         String yearPrefix = String.valueOf(entranceDate.getYear());
@@ -62,8 +67,7 @@ public class UserService {
 
         String seqStr = String.format("%04d", nextSequence);
 
-        return yearPrefix + seqStr; 
+        return yearPrefix + seqStr;
     }
-    
 
 }

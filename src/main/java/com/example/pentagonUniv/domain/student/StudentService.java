@@ -11,9 +11,7 @@ import com.example.pentagonUniv.domain.stu_state.StudentStateRepository;
 import com.example.pentagonUniv.domain.stu_state.StudentStatus;
 import com.example.pentagonUniv.domain.stu_state.dto.StudentStateRequestDto;
 import com.example.pentagonUniv.domain.student.dto.StudentRequestDto;
-import com.example.pentagonUniv.domain.user.UserRepository;
 import com.example.pentagonUniv.domain.user.UserService;
-import com.example.pentagonUniv.domain.user.UserType;
 
 import lombok.RequiredArgsConstructor;
 
@@ -40,15 +38,12 @@ public class StudentService {
         // 학과 아이디 등록
         dto.setDeptId(department.getId());
 
-
         LocalDate birthDate = LocalDate.of(
-            Integer.parseInt(dto.getBirthYear()),
-            Integer.parseInt(dto.getBirthMonth()),
-            Integer.parseInt(dto.getBirthDay())
-        );
+                Integer.parseInt(dto.getBirthYear()),
+                Integer.parseInt(dto.getBirthMonth()),
+                Integer.parseInt(dto.getBirthDay()));
 
         dto.setBirthDate(birthDate);
-
 
         dto.setUserNumber(userService.generateNewUserNumber(dto.getDeptId(), dto.getEntranceDate()));
 

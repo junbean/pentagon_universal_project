@@ -50,3 +50,8 @@ INSERT INTO pu_stu_sub (student_id, subject_id, grade, complete_grade) VALUES
 (1, 10000, 'A', 3),
 (2, 10000, 'B', 3),
 (3, 10001, 'C', 3);
+
+-- 11. 학적 상태
+INSERT INTO pu_stu_stat (id,student_id,status,from_date,to_date,break_app_id) VALUES (1,1,'ENROLLED','2025-03-01',NULL,NULL);
+INSERT INTO pu_stu_stat (id,student_id,status,from_date,to_date,break_app_id) VALUES (2,2,'ENROLLED','2025-03-01',NULL,NULL);
+INSERT INTO pu_stu_stat (id,student_id,status,from_date,to_date,break_app_id) VALUES (3,3,'ENROLLED','2025-03-01',NULL,NULL);
