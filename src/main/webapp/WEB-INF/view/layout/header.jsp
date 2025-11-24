@@ -1,8 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.example.pentagonUniv.domain.user.dto.PrincipalDto" %>
 <%@ page import="com.example.pentagonUniv._global.utils.Define" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -45,6 +44,11 @@
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
 	rel="stylesheet">
 
+<!-- 스프링 부트 min.css 가져오기 -->
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+	rel="stylesheet">
+
 <style>
 body {
 	font-family: 'Noto Sans KR', sans-serif; /* 웹폰트 적용 */
@@ -75,7 +79,7 @@ body {
 		<nav id="navbar" class="navbar order-last order-lg-0">
 			<!-- role == student 일 경우-->
 			<c:choose>
-				<c:when test="${principal.userType.equals(\"STUDENT\")}">
+				<c:when test="${principal.userType eq 'STUDENT'}">
 					<ul>
 						<li><a class="active" href="/">Home</a></li>
 
@@ -119,7 +123,7 @@ body {
 						
 					</ul>
 				</c:when>
-				<c:when test="${principal.userType.equals(\"STAFF\")}">
+				<c:when test="${principal.userType eq 'STAFF'}">
 
 					<!-- role == staff 일 경우 -->
 					<ul>
@@ -168,7 +172,7 @@ body {
 					</ul>
 				</c:when>
 
-				<c:when test="${principal.userType.equals(\"PROFESSOR\")}">
+				<c:when test="${principal.userType eq 'PROFESSOR'}">
 					<!-- role == professor 일 경우 -->
 					<ul>
 						<li><a class="active" href="/">Home</a></li>
@@ -223,19 +227,19 @@ body {
 				<c:when test="${principal != null}">
 					<div class="user-details">
 						<c:choose>
-							<c:when test="${principal.userType.equals(\"STUDENT\")}">
+							<c:when test="${principal.userType eq 'STUDENT'}">
 								<a href="/student/myInfo" class="get-started-btn"
 									data-bs-placement="bottom" data-bs-toggle="popover"
 									data-bs-content="${popoverContent}">${principal.name}(${principal.id})
 									님</a>
 							</c:when>
-							<c:when test="${principal.userType.equals(\"STAFF\")}">
+							<c:when test="${principal.userType eq 'STAFF'}">
 								<a href="/info/staff" class="get-started-btn"
 									data-bs-placement="bottom" data-bs-toggle="popover"
 									data-bs-content="${popoverContent}">${principal.name}(${principal.id})
 									님</a>
 							</c:when>
-							<c:when test="${principal.userType.equals(\"PROFESSOR\")}">
+							<c:when test="${principal.userType eq 'PROFESSOR'}">
 								<a href="/professor/info" class="get-started-btn"
 									data-bs-placement="bottom" data-bs-toggle="popover"
 									data-bs-content="${popoverContent}">${principal.name}(${principal.id})

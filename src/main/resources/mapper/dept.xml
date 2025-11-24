@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.pentagonUniv.domain.dept.DeptRepository">
+
+    <!-- 단과 등록 -->
+    <insert id="createDept">
+        insert into pu_department (name,college_id) values (#{name},#{collegeId})
+    </insert>
+
+
+    <!-- 전체 조회 -->
+    <select id="findADept" resultType="Department">
+        select * from pu_department;
+    </select>
+
+    <!-- 단과 단일 조회 -->
+    <select id="findByDept" resultType="Department">
+        select * from pu_department where id = #{deptId};
+    </select>
+</mapper>

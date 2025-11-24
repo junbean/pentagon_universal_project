@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+    <mapper namespace="com.example.pentagonUniv.domain.staff.StaffRepository">
+
+    <insert id="createStaff" parameterType="StaffRequestDto">
+        insert into pu_user (user_number,name,birth_date,gender,address,tel,email,password,entrance_date,user_type) 
+        values (#{userNumber} , #{name} , #{birthDate} , #{gender} , #{address} , #{tel} , #{email} , #{password} , #{hireDate} , #{userType})
+    </insert>
+
+</mapper>

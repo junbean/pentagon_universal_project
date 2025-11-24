@@ -11,7 +11,7 @@ public class LoginDto {
 
     @Min(10000)
     @Max(2147483646)
-    private Long userNumber;
+    private String userNumber;
     @Size(min = 6, max = 20, message = "패스워드는 6~20자 사이여야합니다.")
     private String password;
     private String rememberId;
