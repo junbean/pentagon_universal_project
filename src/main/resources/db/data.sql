@@ -1,8 +1,6 @@
 -- 1. 단과대
 INSERT INTO pu_college (id, name) VALUES
-(1, '공과대'),
-(2, '인문대'),
-(3, '자연대');
+(1, '공과대'), (2, '인문대'), (3, '자연대');
 
 -- 2. 학과
 INSERT INTO pu_department (id, name, college_id) VALUES
@@ -44,11 +42,11 @@ VALUES
 (10001, '전자회로', 5, 'R102', 2, '전공', 2025, 1, '화', 10, 12, 3, 30);
 
 -- 9. 수강 신청
--- INSERT INTO pu_pre_stu_sub (student_id, subject_id) VALUES
--- (1, 10000), (2, 10000), (3, 10001);
+INSERT INTO pu_pre_stu_sub (student_id, subject_id) VALUES
+(1, 10000), (2, 10000), (3, 10001);
 
 -- 10. 수강 내역
--- INSERT INTO pu_stu_sub (student_id, subject_id, grade, complete_grade) VALUES
--- (1, 10000, 'A', 3),
--- (2, 10000, 'B', 3),
--- (3, 10001, 'C', 3);
+INSERT INTO pu_stu_sub (student_id, subject_id, grade, complete_grade) VALUES
+(1, 10000, 'A', 3),
+(2, 10000, 'B', 3),
+(3, 10001, 'C', 3);
