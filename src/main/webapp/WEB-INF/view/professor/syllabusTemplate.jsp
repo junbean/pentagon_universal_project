@@ -1,17 +1,18 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8" />
     <style>
         body {
-            font-family: "Malgun Gothic", sans-serif;
-            padding: 25px;
+            font-family: "NotoSansKR-Regular";
+            padding: 18px;
             font-size: 14px;
         }
 
         h1 {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         table {
@@ -22,25 +23,27 @@
 
         th, td {
             border: 1px solid #444;
-            padding: 8px;
+            padding: 6px;
             vertical-align: top;
         }
 
-        th {
-            background: #f1f1f1;
-            font-weight: bold;
-            text-align: left;
+        .header-cell {
+            background: #e2e2e2;
+            font-family: "NotoSansKR-Medium";
+            font-weight: normal;
+            text-align: center;
+            font-size: 13px;
         }
 
         .section-title {
             font-size: 16px;
-            font-weight: bold;
+            font-family: "NotoSansKR-Medium";
             margin-top: 30px;
             margin-bottom: 10px;
         }
 
         /* multi-page table for weekly plan */
-        @page { size: A4; margin: 20mm; }
+        @page { size: A4; margin: 10mm; }
 
         table.weekly {
             width: 100%;
@@ -57,10 +60,12 @@
             padding: 6px;
         }
 
-        table.weekly thead th {
+
+        .header-row {
             background: #e2e2e2;
-            font-weight: bold;
+            font-family: "NotoSansKR-Medium";
             text-align: center;
+            page-break-inside: avoid;
         }
 
         table.weekly tfoot td {
@@ -68,8 +73,16 @@
             text-align: center;
         }
 
-        tr, thead, tfoot {
+        tr, tfoot {
             page-break-inside: avoid;
+        }
+        tfoot {
+            font-family: "NotoSansKR-Medium";
+        }
+
+        .weekly-title {
+            break-before: page;
+            page-break-before: always;
         }
     </style>
 </head>
@@ -81,33 +94,33 @@
 <!-- 기본 정보 -->
 <table>
     <tr>
-        <th>강의명</th>
+        <td class="header-cell">강의명</td>
         <td>${subjectName}</td>
-        <th>담당 교수</th>
+        <td class="header-cell">담당 교수</td>
         <td>${professorName}</td>
     </tr>
     <tr>
-        <th>학과명</th>
+        <td class="header-cell">학과명</td>
         <td>${departmentName}</td>
-        <th>강의 구분</th>
+        <td class="header-cell">강의 구분</td>
         <td>${lectureType}</td>
     </tr>
     <tr>
-        <th>연도</th>
-        <td>${year}</td>
-        <th>학기</th>
-        <td>${semester}</td>
+        <td class="header-cell">연도</td>
+        <td>${year} 학년도</td>
+        <td class="header-cell">학기</td>
+        <td>${semester} 학기</td>
     </tr>
     <tr>
-        <th>요일</th>
-        <td>${dayOfWeek}</td>
-        <th>강의 시간</th>
-        <td>${startTime} ~ ${endTime}</td>
+        <td class="header-cell">요일</td>
+        <td>${dayOfWeek}요일</td>
+        <td class="header-cell">강의 시간</td>
+        <td>${startTime} 시 ~ ${endTime} 시</td>
     </tr>
     <tr>
-        <th>이수학점</th>
+        <td class="header-cell">이수학점</td>
         <td>${credit}</td>
-        <th>수강 정원</th>
+        <td class="header-cell">수강 정원</td>
         <td>${capacity}</td>
     </tr>
 </table>
@@ -131,15 +144,13 @@
 </table>
 
 <!-- 주차별 계획 -->
-<div class="section-title">주차별 강의 계획 (1~15주)</div>
+<div class="section-title weekly-title">주차별 강의 계획 (1~15주)</div>
 
 <table class="weekly">
-    <thead>
-    <tr>
-        <th style="width: 10%;">주차</th>
-        <th style="width: 90%;">강의 내용</th>
+    <tr class="header-row">
+        <td class="header-cell" style="width: 10%;">주차</td>
+        <td class="header-cell" style="width: 90%;">강의 내용</td>
     </tr>
-    </thead>
 
     <tbody>
     <tr><td>1주차</td><td>${week1}</td></tr>

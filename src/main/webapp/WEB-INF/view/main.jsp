@@ -125,18 +125,18 @@
 
 									<!-- 마이페이지 버튼을 님 환영합니다 글자 옆에 배치 -->
 									<div class="text-end">
-                                                        <c:choose>
-                                                            <c:when test="${principal.userType eq 'STAFF'}">
-                                                                <a href="/info/staff" class="btn--confirm ">마이페이지</a>
-                                                            </c:when>
-                                                            <c:when test="${principal.userType eq 'STUDENT'}">
-                                                                <a href="/student/myInfo" class="btn--confirm ">마이페이지</a>
-                                                            </c:when>
-                                                            <c:when test="${principal.userType eq 'PROFESSOR'}">
-                                                                <a href="/professor/info" class="btn--confirm ">마이페이지</a>
-                                                            </c:when>
-                                                        </c:choose>
-</div>
+                                        <c:choose>
+                                            <c:when test="${principal.userType eq 'STAFF'}">
+                                                <a href="/info/staff" class="btn--confirm ">마이페이지</a>
+                                            </c:when>
+                                            <c:when test="${principal.userType eq 'STUDENT'}">
+                                                <a href="/student/myInfo" class="btn--confirm ">마이페이지</a>
+                                            </c:when>
+                                            <c:when test="${principal.userType eq 'PROFESSOR'}">
+                                                <a href="/professor/info" class="btn--confirm ">마이페이지</a>
+                                            </c:when>
+                                        </c:choose>
+                                    </div>
 								</p>
 							</div>
 

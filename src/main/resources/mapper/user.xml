@@ -13,9 +13,8 @@
     <!--  로그인 성공시 세션 저장  -->
 	<select id="findById" resultType="com.example.pentagonUniv.domain.user.dto.UserInfoDto">
 		<![CDATA[
-		    SELECT *
-		    FROM pu_user
-		    WHERE user_number = #{userId}
+            SELECT * FROM pu_user 
+            WHERE id = #{userId}
         ]]>
 	</select>
 
@@ -26,6 +25,27 @@
         FROM pu_user 
         WHERE 
             user_number LIKE CONCAT(#{year}, '%')
+    </select>
+
+    <!-- 학생 조회 -->
+    <select id="findByAllStudentInfo" resultType="StudentInfoDto">
+        SELECT *
+        FROM pu_user
+        WHERE user_type = 'STUDENT'
+    </select>
+
+    <!-- 교수 조회 -->
+    <select id="findByAllProfessorInfo" resultType="ProfessorInfoDto">
+        SELECT *
+        FROM pu_user
+        WHERE user_type = 'PROFESSOR'
+    </select>
+
+    <!-- 교직원 조회 -->
+    <select id="findByAllStaffInfo" resultType="StaffInfoDto">
+        SELECT *
+        FROM pu_user
+        WHERE user_type = 'STAFF'
     </select>
     
 </mapper>

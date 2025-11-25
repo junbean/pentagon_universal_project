@@ -1,21 +1,17 @@
 package com.example.pentagonUniv.domain.college;
 
-import java.util.List;
-
+import com.example.pentagonUniv._global.utils.Define;
+import com.example.pentagonUniv.domain.user.UserService;
+import com.example.pentagonUniv.domain.user.dto.PrincipalDto;
+import com.example.pentagonUniv.domain.user.dto.UserInfoDto;
+import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.example.pentagonUniv._global.utils.Define;
-import com.example.pentagonUniv.domain.user.UserService;
-import com.example.pentagonUniv.domain.user.dto.PrincipalDto;
-import com.example.pentagonUniv.domain.user.dto.UserInfoDto;
-
-import jakarta.servlet.http.HttpSession;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
@@ -32,7 +28,7 @@ public class CollegeController {
     public String home(Model model) {
         PrincipalDto principal = (PrincipalDto) session.getAttribute(Define.PRINCIPAL);
         if (principal != null) {
-            UserInfoDto userInfo = userService.findById(principal.getUserNumber());
+            UserInfoDto userInfo = userService.findById(principal.getId());
             model.addAttribute("userInfo", userInfo);
         }
         return "college/collegeRegister";

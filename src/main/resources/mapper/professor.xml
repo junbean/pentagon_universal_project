@@ -9,4 +9,10 @@
         insert into pu_user (user_number,name,birth_date,gender,address,tel,email,password,dept_id,entrance_date,user_type) 
         values (#{userNumber} , #{name} , #{birthDate} , #{gender} , #{address} , #{tel} , #{email} , #{password} ,${deptId}, #{hireDate} , #{userType})
     </insert>
+
+    <select id="findProfessor" resultType="com.example.pentagonUniv.domain.professor.dto.ProfessorRequestDto">
+        SELECT *
+        FROM pu_user
+        WHERE id = #{professorId}
+    </select>
 </mapper>

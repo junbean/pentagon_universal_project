@@ -41,6 +41,9 @@ dependencies {
 	// MyBatis
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.5'
 
+	// html -> pdf 변환
+	implementation 'com.openhtmltopdf:openhtmltopdf-pdfbox:1.0.10'
+
 	// 비밀번호 암호화
 	implementation 'org.springframework.security:spring-security-crypto'
 

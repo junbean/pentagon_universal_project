@@ -1,18 +1,17 @@
 package com.example.pentagonUniv.domain.professor.dto;
 
-import java.time.LocalDate;
-
 import com.example.pentagonUniv.domain.user.UserType;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProfessorRequestDto {
-        private String userNumber;
+    private String userNumber;
     private String name;
     private LocalDate birthDate;
     private String birthYear;
