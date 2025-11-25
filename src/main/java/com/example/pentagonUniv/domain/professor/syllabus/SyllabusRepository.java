@@ -4,6 +4,7 @@ import com.example.pentagonUniv.domain.professor.dto.SubjectDto;
 import com.example.pentagonUniv.domain.professor.syllabus.dto.SyllabusRequestDto;
 import com.example.pentagonUniv.domain.professor.syllabus.dto.SyllabusResponseDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -29,5 +30,7 @@ public interface SyllabusRepository {
     public int existsSyllabus(Long syllabusId);
 
     // 강의 계획서 주소 update
-    public void updatePdfPath(Long syllabusId, String pdfPath);
+    public void updatePdfPath(@Param("syllabusId")Long syllabusId, @Param("pdfPath") String pdfPath);
+
+    public String findPdfPath(Long syllabusId);
 }

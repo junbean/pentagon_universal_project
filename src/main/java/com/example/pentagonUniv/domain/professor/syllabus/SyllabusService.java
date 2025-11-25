@@ -1,5 +1,7 @@
 package com.example.pentagonUniv.domain.professor.syllabus;
 
+import com.example.pentagonUniv.domain.dept.Department;
+import com.example.pentagonUniv.domain.dept.DeptRepository;
 import com.example.pentagonUniv.domain.professor.ProfessorRepository;
 import com.example.pentagonUniv.domain.professor.dto.ProfessorRequestDto;
 import com.example.pentagonUniv.domain.professor.dto.SubjectDto;
@@ -12,8 +14,6 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +24,7 @@ public class SyllabusService {
     private final SyllabusRepository syllabusRepository;
     private final ProfessorRepository professorRepository;
     private final HtmlRenderUtil htmlRenderUtil;
+    private final DeptRepository deptRepository;
 
     // 본인 강의 리스트 전체 조회
     public List<SyllabusResponseDto.SubjectListDto> findAllSubjectByProfessorAndSyllabus(Long professorId){
@@ -41,9 +42,11 @@ public class SyllabusService {
         }
     }
 
-    public void createSyllabusByCOMPLETE(SyllabusRequestDto.CreateSyllabus syllabus){
+    public void createSyllabusByCOMPLETE(SyllabusRequestDto.CreateSyllabus syllabus, Long userId){
         SubjectDto subject = syllabusRepository.findSubject(syllabus.getSubjectId());
-        ProfessorRequestDto professor = professorRepository.findProfessor(subject.getProfessor_id());
+        ProfessorRequestDto professor = professorRepository.findProfessor(userId);
+
+        Department department = deptRepository.findByDept(subject.getDeptId());
 
         // 1. status COMPLETE로 설정
         syllabus.setStatus("COMPLETE");
@@ -51,7 +54,6 @@ public class SyllabusService {
         // 2. 기존 존재 여부 확인 후 저장/업데이트
         if (syllabusRepository.existsSyllabus(syllabus.getSubjectId()) > 0) {
             syllabusRepository.updateSyllabus(syllabus);
-
 
         } else {
             syllabusRepository.insertSyllabus(syllabus);
@@ -66,7 +68,17 @@ public class SyllabusService {
             model.put("objective", syllabus.getObjective());
             model.put("textbook", syllabus.getTextbook());
 
-            // 주차별 1 ~ 15주 자동 매핑
+            model.put("departmentName", department.getName());
+            model.put("lectureType", subject.getType());
+            model.put("year", subject.getSubYear());
+            model.put("semester", subject.getSemester());
+            model.put("dayOfWeek", subject.getSubDay());
+            model.put("startTime", subject.getStartTime());
+            model.put("endTime", subject.getEndTime());
+            model.put("credit", subject.getGrades());
+            model.put("capacity", subject.getCapacity());
+
+
             model.put("week1", syllabus.getWeek1());
             model.put("week2", syllabus.getWeek2());
             model.put("week3", syllabus.getWeek3());
@@ -85,7 +97,7 @@ public class SyllabusService {
 
             // 4. JSP 템플릿을 HTML 문자열로 렌더링
             String html = htmlRenderUtil.renderJsp(
-                    "professor/syllabusTemplate",
+                    "/professor/syllabus/syllabusTemplate",
                     model
             );
 
@@ -103,8 +115,18 @@ public class SyllabusService {
                 builder.withHtmlContent(html, null);
 
                 builder.useFont(
-                        new File("src/main/resources/fonts/NotoSansKR-Regular.ttf"),
-                        "NotoSansKR"
+                        new File("src/main/resources/static/fonts/NotoSansKR-Regular.ttf"),
+                        "NotoSansKR-Regular"
+                );
+
+                builder.useFont(
+                        new File("src/main/resources/static/fonts/NotoSansKR-Bold.ttf"),
+                        "NotoSansKR-Medium"
+                );
+
+                builder.useFont(
+                        new File("src/main/resources/static/fonts/NotoSansKR-Medium.ttf"),
+                        "NotoSansKR-Bold"
                 );
 
                 builder.toStream(os);
@@ -135,4 +157,7 @@ public class SyllabusService {
     }
 
 
+    public String getPdfPath(Long subjectId){
+       return syllabusRepository.findPdfPath(subjectId);
+    }
 }

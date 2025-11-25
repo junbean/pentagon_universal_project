@@ -5,12 +5,15 @@ import com.example.pentagonUniv.domain.professor.dto.SubjectDto;
 import com.example.pentagonUniv.domain.professor.syllabus.dto.SyllabusRequestDto;
 import com.example.pentagonUniv.domain.professor.syllabus.dto.SyllabusResponseDto;
 import com.example.pentagonUniv.domain.user.dto.PrincipalDto;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -61,26 +64,33 @@ public class SyllabusController {
     @PostMapping("/create/{id}")
     public String syllabusCreate(Model model,
                                  SyllabusRequestDto.CreateSyllabus newSyllabus,
-                                 HttpSession session){
+                                 HttpSession session,
+                                 RedirectAttributes rttr){
 
         PrincipalDto principal = (PrincipalDto) session.getAttribute(Define.PRINCIPAL);
         if(newSyllabus.getStatus().equalsIgnoreCase("TEMP")){
-            System.out.println("=== Syllabus 출력 ===");
-            System.out.println(newSyllabus);
             syllabusService.createSyllabusByTEMP(newSyllabus);
+            rttr.addFlashAttribute("message", "임시저장 되었습니다");
         }
         else{
-            syllabusService.createSyllabusByCOMPLETE(newSyllabus);
+            syllabusService.createSyllabusByCOMPLETE(newSyllabus, principal.getId());
+            rttr.addFlashAttribute("message", "최종제출 되었습니다");
         }
 
         return "redirect:/professor/syllabus/" + principal.getId();
     }
 
-    @GetMapping("/professor/syllabusTemplate")
+    @GetMapping("/syllabusTemplate")
     public String syllabusTemplate(Model model,
                                    @RequestParam Map<String, Object> params) {
 
         params.forEach(model::addAttribute);
         return "/professor/syllabusTemplate"; // JSP 경로
+    }
+
+    @GetMapping("/view/{subjectId}")
+    public void viewPdf(@PathVariable Long subjectId, HttpServletResponse response) throws IOException {
+        String pdfUrl = syllabusService.getPdfPath(subjectId);
+        response.sendRedirect(pdfUrl);  // /pdf/xxx.pdf 로 이동
     }
 }

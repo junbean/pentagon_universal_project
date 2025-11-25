@@ -36,10 +36,14 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(authIntercepter).addPathPatterns(Define.PATHS);
-        registry.addInterceptor(authIntercepterForProfessor).addPathPatterns(Define.PROFESSOR_PATHS);
-        registry.addInterceptor(authIntercepterForStaff).addPathPatterns(Define.STAFF_PATHS);
-        registry.addInterceptor(authIntercepterForStudent).addPathPatterns(Define.STUDENT_PATHS);
+        registry.addInterceptor(authIntercepter).addPathPatterns(Define.PATHS)
+                .excludePathPatterns("/professor/syllabus/syllabusTemplate", "/pdf/**", "/img/**");
+        registry.addInterceptor(authIntercepterForProfessor).addPathPatterns(Define.PROFESSOR_PATHS)
+                .excludePathPatterns("/professor/syllabus/syllabusTemplate", "/pdf/**", "/img/**");
+        registry.addInterceptor(authIntercepterForStaff).addPathPatterns(Define.STAFF_PATHS)
+                .excludePathPatterns("/pdf/**", "/img/**");
+        registry.addInterceptor(authIntercepterForStudent).addPathPatterns(Define.STUDENT_PATHS)
+                .excludePathPatterns("/pdf/**", "/img/**");
         registry.addInterceptor(authIntercepterForLogin).addPathPatterns("/login");
 //        registry.addInterceptor(authIntercepterForMainPage).addPathPatterns("/");
     }

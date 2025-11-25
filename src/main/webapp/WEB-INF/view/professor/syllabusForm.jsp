@@ -13,6 +13,24 @@
         resize: none;
         height: 70px !important;
     }
+
+    .syllabus-btn {
+        padding: 5px 12px;
+        font-size: 14px;
+        border-radius: 6px;
+        border: none !important;
+        height: 38px;
+        line-height: 26px;
+    }
+
+    .complete-btn {
+        background: #5fcf80;
+        color: white !important;
+    }
+
+    .complete-btn:hover {
+        background: #4bb96a;
+    }
 </style>
 
 <body>
@@ -80,10 +98,10 @@
 
                 <!-- 버튼 -->
                 <div class="text-center mb-5">
-                    <button type="submit" name="status" value="TEMP" class="btn btn-secondary me-2">
+                    <button type="submit" name="status" value="TEMP" class="btn btn-secondary syllabus-btn me-2" onclick="tempSave()">
                         임시저장
                     </button>
-                    <button type="submit" name="status" value="COMPLETE" class="btn btn-primary">
+                    <button type="submit" name="status" value="COMPLETE" class="syllabus-btn complete-btn" onclick="return confirmSubmit();">
                         최종 제출
                     </button>
                 </div>
@@ -96,6 +114,29 @@
 
 </main>
 
+<script>
+    function confirmSubmit() {
+        // 최종제출 시
+        completeSave();
+
+        return confirm("정말 최종 제출하시겠습니까?\n제출 후 수정할 수 없습니다");
+    }
+
+    function tempSave() {
+        // 모든 required 제거
+        document.querySelectorAll("[required]").forEach(el => {
+            el.dataset.required = "true";   // 나중에 다시 복구용 저장
+            el.removeAttribute("required");
+        });
+    }
+
+    function completeSave() {
+        // required 원래대로 복구
+        document.querySelectorAll("[data-required]").forEach(el => {
+            el.setAttribute("required", "true");
+        });
+    }
+</script>
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>
 
 </body>

@@ -79,6 +79,12 @@
         UPDATE pu_syllabus
         SET pdf_path = #{pdfPath},
         status = 'COMPLETE'
-        WHERE subject_id = #{subjectId};
+        WHERE subject_id = #{syllabusId};
     </update>
+
+    <select id="findPdfPath" resultType="string">
+        SELECT pdf_path
+        FROM pu_syllabus
+        WHERE subject_id = #{syllabusId};
+    </select>
 </mapper>

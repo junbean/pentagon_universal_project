@@ -28,7 +28,7 @@
         transition: 0.2s;
     }
 
-    .write-btn {
+    .write-btn, .view-btn {
         padding: 5px 12px;
         background: #5fcf80;
         color: white !important;
@@ -37,7 +37,7 @@
         font-size: 14px;
     }
 
-    .write-btn:hover {
+    .write-btn:hover, .view-btn {
         background: #4bb96a;
     }
 
@@ -46,6 +46,12 @@
         font-weight: 600;
     }
 </style>
+
+<c:if test="${not empty message}">
+    <script>
+        alert("${message}");
+    </script>
+</c:if>
 
 <body id="page-top">
 <div id="wrapper">
@@ -95,7 +101,12 @@
                                     </c:if>
 
                                     <c:if test="${subject.syllabus eq true}">
-                                        <span class="done-text">완료</span>
+                                        <span class="done-text">등록 완료</span>
+                                        <a href="/professor/syllabus/view/${subject.id}"
+                                           target="_blank"
+                                           class="view-btn ms-2">
+                                           조회
+                                        </a>
                                     </c:if>
                                 </td>
                             </tr>

@@ -15,7 +15,7 @@ public class HtmlRenderUtil {
     public String renderJsp(String viewPath, Map<String, Object> model) {
 
         // 1) JSP를 렌더링할 실제 URL을 만든다
-        StringBuilder url = new StringBuilder("http://localhost:80/");
+        StringBuilder url = new StringBuilder("http://localhost:80");
         url.append(viewPath); // ex) professor/syllabusTemplate
 
         // 모델을 ?key=value 로 붙이기
