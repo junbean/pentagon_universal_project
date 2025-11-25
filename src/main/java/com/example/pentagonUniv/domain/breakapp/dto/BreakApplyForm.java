@@ -29,7 +29,6 @@ public class BreakApplyForm {
     @Min(1) @Max(2)
     private Integer fromSemester;
 
-    @NotNull(message = "종료 연도는 필수입니다.")
     @Min(value = 2000) @Max(value = 2100)
     private Integer toYear;
 

@@ -50,7 +50,6 @@
   .btn-main:hover {
       background-color: #4cb76a !important;
   }
-
 </style>
 </head>
 
@@ -65,9 +64,10 @@
 
         <form method="post" action="/student/break/apply" onsubmit="return validateBreakForm()">
 
+            <!-- 액션 선택 -->
             <div class="form-row mb-3">
                 <div class="col">
-                    <select name="action" class="form-control">
+                    <select name="action" id="breakAction" class="form-control" onchange="toggleBreakForm()">
                         <option value="LEAVE">휴학</option>
                         <option value="RETURN">복학</option>
                     </select>
@@ -86,11 +86,24 @@
             <textarea name="reasonText" class="form-control mb-3"
                       rows="3" placeholder="상세 사유(선택)"></textarea>
 
-            <div class="form-row mb-3">
-                <div class="col"><input name="fromYear" class="form-control" placeholder="시작년도"></div>
-                <div class="col"><input name="fromSemester" class="form-control" placeholder="시작학기 (1 or 2)"></div>
-                <div class="col"><input name="toYear" class="form-control" placeholder="종료년도"></div>
-                <div class="col"><input name="toSemester" class="form-control" placeholder="종료학기 (1 or 2)"></div>
+            <!-- 기간 / 복학 학기 -->
+            <div class="form-row mb-3" id="periodRow">
+                <div class="col">
+                    <input name="fromYear" class="form-control"
+                           placeholder="시작년도 / 복학년도">
+                </div>
+                <div class="col">
+                    <input name="fromSemester" class="form-control"
+                           placeholder="시작학기 / 복학학기 (1 or 2)">
+                </div>
+                <div class="col" id="toYearCol">
+                    <input name="toYear" class="form-control"
+                           placeholder="종료년도">
+                </div>
+                <div class="col" id="toSemCol">
+                    <input name="toSemester" class="form-control"
+                           placeholder="종료학기 (1 or 2)">
+                </div>
             </div>
 
             <button class="btn btn-main mt-2">신청하기</button>
@@ -101,18 +114,55 @@
 
 <%@ include file="/WEB-INF/view/layout/footer.jsp" %>
 
-</body>
 <script>
-function validateBreakForm() {
-    const year = document.querySelector("input[name='fromYear']").value.trim();
-    const sem  = document.querySelector("input[name='fromSemester']").value.trim();
+function toggleBreakForm() {
+    const action   = document.getElementById("breakAction").value;
+    const toYearCol = document.getElementById("toYearCol");
+    const toSemCol  = document.getElementById("toSemCol");
 
-    if (year === "" || sem === "") {
-        alert("시작년도와 시작학기는 반드시 입력해야 합니다.");
-        return false;
+    if (action === 'LEAVE') {
+        // 휴학: 종료 연/학기 입력 노출
+        toYearCol.style.display = '';
+        toSemCol.style.display  = '';
+    } else {
+        // 복학: 종료 연/학기 입력 숨김
+        toYearCol.style.display = 'none';
+        toSemCol.style.display  = 'none';
+
+        // 값도 지워두는 편이 깔끔
+        document.querySelector("input[name='toYear']").value = '';
+        document.querySelector("input[name='toSemester']").value = '';
+    }
+}
+
+function validateBreakForm() {
+    const action = document.getElementById("breakAction").value;
+
+    const fromYear = document.querySelector("input[name='fromYear']").value.trim();
+    const fromSem  = document.querySelector("input[name='fromSemester']").value.trim();
+    const toYear   = document.querySelector("input[name='toYear']").value.trim();
+    const toSem    = document.querySelector("input[name='toSemester']").value.trim();
+
+    if (action === 'LEAVE') {
+        // 휴학: 시작/종료 모두 필수
+        if (fromYear === "" || fromSem === "" || toYear === "" || toSem === "") {
+            alert("휴학 신청 시 시작/종료 연도와 학기를 모두 입력하세요.");
+            return false;
+        }
+    } else { // RETURN
+        // 복학: 복학할 연/학기만 필수
+        if (fromYear === "" || fromSem === "") {
+            alert("복학 신청 시 복학할 연도와 학기를 입력하세요.");
+            return false;
+        }
     }
 
     return true;
 }
+
+// 첫 로딩 시 현재 액션 값 기준으로 폼 상태 세팅
+document.addEventListener('DOMContentLoaded', toggleBreakForm);
 </script>
+
+</body>
 </html>

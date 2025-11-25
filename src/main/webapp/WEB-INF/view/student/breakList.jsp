@@ -90,7 +90,7 @@
                       </c:choose>
                     </td>
 
-                    <td><fmt:formatDate value="${b.appDate}" pattern="yyyy-MM-dd HH:mm" /></td>
+                    <td><fmt:formatDate value="${b.appDate}" pattern="yyyy-MM-dd" /></td>
                   </tr>
                 </c:forEach>
               </tbody>

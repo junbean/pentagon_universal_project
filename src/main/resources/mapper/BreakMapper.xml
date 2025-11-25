@@ -36,17 +36,33 @@
   </select>
 
   <select id="findByStatus" resultMap="BreakAppMap">
-    SELECT * FROM pu_break WHERE status = #{status} ORDER BY app_date ASC
+    SELECT * FROM pu_break
+    WHERE status = #{status}
+    ORDER BY app_date ASC
   </select>
 
   <update id="updateStatus">
     UPDATE pu_break SET status = #{status} WHERE id = #{id}
   </update>
 
-  <!-- 중복 신청 방지 -->
-  <select id="findPendingByStudent" resultMap="BreakAppMap">
-    SELECT * FROM pu_break
+  <!-- 구간 중복 방지 -->
+  <select id="findOverlappingLeave" resultMap="BreakAppMap">
+    SELECT *
+    FROM pu_break
     WHERE student_id = #{studentId}
-      AND status = 'PENDING'
+      AND action = 'LEAVE'
+      AND status IN ('PENDING', 'APPROVED')
+      AND (from_year * 10 + from_semester) &lt;= (#{toYear} * 10 + #{toSemester})
+      AND (to_year   * 10 + to_semester)   &gt;= (#{fromYear} * 10 + #{fromSemester})
+  </select>
+
+  <select id="findLastApprovedLeave" resultMap="BreakAppMap">
+    SELECT *
+    FROM pu_break
+    WHERE student_id = #{studentId}
+      AND action = 'LEAVE'
+      AND status = 'APPROVED'
+    ORDER BY app_date DESC
+    LIMIT 1
   </select>
 </mapper>

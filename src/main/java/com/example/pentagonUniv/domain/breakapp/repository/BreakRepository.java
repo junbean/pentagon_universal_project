@@ -12,9 +12,17 @@ import com.example.pentagonUniv.domain.breakapp.BreakStatus;
 public interface BreakRepository {
     int insert(BreakApp app);
     List<BreakApp> findByStudentId(Long studentId);
-    List<BreakApp> findByStatus(BreakStatus status);
+    List<BreakApp> findByStatus(@Param("status") String status);
     int updateStatus(@Param("id") Long id, @Param("status") BreakStatus status);
     BreakApp findById(Long id);
-    // 중복 신청 방지
-    List<BreakApp> findPendingByStudent(Long studentId);
+    // 기간 중복 금지
+    List<BreakApp> findOverlappingLeave(
+            @Param("studentId") Long studentId,
+            @Param("fromYear") Integer fromYear,
+            @Param("fromSemester") Integer fromSemester,
+            @Param("toYear") Integer toYear,
+            @Param("toSemester") Integer toSemester
+    );
+    // 마지막 승인된 휴학 신청 한 건
+    BreakApp findLastApprovedLeave(@Param("studentId") Long studentId);
 }
