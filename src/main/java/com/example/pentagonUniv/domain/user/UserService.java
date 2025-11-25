@@ -2,21 +2,19 @@ package com.example.pentagonUniv.domain.user;
 
 import com.example.pentagonUniv._global.handler.exception.CustomRestfullException;
 import com.example.pentagonUniv._global.utils.Define;
-import com.example.pentagonUniv.domain.student.StudentService;
 import com.example.pentagonUniv.domain.student.dto.StudentInfoDto;
 import com.example.pentagonUniv.domain.user.dto.LoginDto;
-import com.example.pentagonUniv.domain.user.dto.UserInfoDto;
 import com.example.pentagonUniv.domain.user.dto.PrincipalDto;
+import com.example.pentagonUniv.domain.user.dto.UserInfoDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import java.time.LocalDate;
-import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Slf4j
 @Service

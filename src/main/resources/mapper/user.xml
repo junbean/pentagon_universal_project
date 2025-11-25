@@ -12,7 +12,7 @@
 
     <!--  로그인 성공시 세션 저장  -->
 	<select id="findById" resultType="com.example.pentagonUniv.domain.user.dto.UserInfoDto">
-		<![CDATA[SELECT * FROM pu_user WHERE user_number = #{userId}	]]>
+		<![CDATA[SELECT * FROM pu_user WHERE id = #{userId}]]>
 	</select>
 
     <!-- 현재 까지 등록된 학번 조회 -->
