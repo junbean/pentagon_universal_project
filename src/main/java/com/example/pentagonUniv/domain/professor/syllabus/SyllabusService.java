@@ -31,7 +31,7 @@ public class SyllabusService {
         return syllabusRepository.findAllByProfessorId(professorId);
     }
     
-    // 강의 계획서 등록
+    // 강의 계획서 임시저장
     public void createSyllabusByTEMP(SyllabusRequestDto.CreateSyllabus syllabus){
         // 존재하면 업데이트 아니면 새로 등록
         if(syllabusRepository.existsSyllabus(syllabus.getSubjectId()) > 0){
@@ -41,7 +41,8 @@ public class SyllabusService {
             syllabusRepository.insertSyllabus(syllabus);
         }
     }
-
+    
+    // 강의 계획서 최종등록
     public void createSyllabusByCOMPLETE(SyllabusRequestDto.CreateSyllabus syllabus, Long userId){
         SubjectDto subject = syllabusRepository.findSubject(syllabus.getSubjectId());
         ProfessorRequestDto professor = professorRepository.findProfessor(userId);
@@ -111,9 +112,12 @@ public class SyllabusService {
             // 6. HTML => PDF 변환
             try (OutputStream os = new FileOutputStream(pdfFullPath)) {
                 PdfRendererBuilder builder = new PdfRendererBuilder();
-                builder.useFastMode();
-                builder.withHtmlContent(html, null);
+                builder.useFastMode(); // 렌더링 속도 향상 모드 사용(빠른처리 가능)
+                builder.withHtmlContent(html, null); // html 문자열을 직접 전달해서 pdf로 변환
+                // 첫번째 인자: html 내용(String)
+                // 두번째 인자: base URL(CSS, 이미지 상대경로용) / null 이면 사용안함
 
+                // 폰트 설정(깨짐 방지)
                 builder.useFont(
                         new File("src/main/resources/static/fonts/NotoSansKR-Regular.ttf"),
                         "NotoSansKR-Regular"
@@ -129,8 +133,10 @@ public class SyllabusService {
                         "NotoSansKR-Bold"
                 );
 
-                builder.toStream(os);
-                builder.run();
+                builder.toStream(os); // pdf 결과를 os(파일 스트림)으로 내보냄
+                builder.run(); // 변환 실행
+
+                // PDF 바이트 데이터  →  OutputStream(os) →  파일로 저장
             }
 
             // 7. DB에 pdf_path 저장
@@ -157,6 +163,7 @@ public class SyllabusService {
     }
 
 
+    // pdf 주소 조회
     public String getPdfPath(Long subjectId){
        return syllabusRepository.findPdfPath(subjectId);
     }

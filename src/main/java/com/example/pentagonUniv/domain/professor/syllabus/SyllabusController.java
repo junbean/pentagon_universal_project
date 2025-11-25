@@ -28,10 +28,6 @@ public class SyllabusController {
     public String subjectList(Model model, @PathVariable(name = "id") Long id){
         List<SyllabusResponseDto.SubjectListDto> list = syllabusService.findAllSubjectByProfessorAndSyllabus(id);
 
-//        System.out.println("=== 조회 결과 출력 ===");
-//        for (SyllabusResponseDto.SubjectListDto subject : list) {
-//            System.out.println(subject);
-//        }
         model.addAttribute("subjectList", list);
         return "/professor/subjectList";
     }
@@ -46,9 +42,6 @@ public class SyllabusController {
         SyllabusRequestDto.CreateSyllabus syllabus = syllabusService.findBySubjectId(syllabusId);
         SubjectDto subject = syllabusService.findBySubject(syllabusId);
 
-        System.out.println("------syllabus--------");
-        System.out.println(syllabus);
-
         if(syllabus == null){
             model.addAttribute("syllabus", new SyllabusRequestDto.CreateSyllabus());
             model.addAttribute("subject", subject);
@@ -61,6 +54,8 @@ public class SyllabusController {
         return "/professor/syllabusForm";
     }
 
+    // 강의 계획서 등록
+    // 임시저장과 최종제출 처리 분기
     @PostMapping("/create/{id}")
     public String syllabusCreate(Model model,
                                  SyllabusRequestDto.CreateSyllabus newSyllabus,
@@ -80,6 +75,7 @@ public class SyllabusController {
         return "redirect:/professor/syllabus/" + principal.getId();
     }
 
+    // 내부 호출용 컨트롤러 -> jsp 폼에 데이터 넣어서 반환해줌(렌더링을 위함)
     @GetMapping("/syllabusTemplate")
     public String syllabusTemplate(Model model,
                                    @RequestParam Map<String, Object> params) {
@@ -88,6 +84,7 @@ public class SyllabusController {
         return "/professor/syllabusTemplate"; // JSP 경로
     }
 
+    // 저장된 pdf 조회
     @GetMapping("/view/{subjectId}")
     public void viewPdf(@PathVariable Long subjectId, HttpServletResponse response) throws IOException {
         String pdfUrl = syllabusService.getPdfPath(subjectId);

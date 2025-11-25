@@ -32,6 +32,7 @@ public class HtmlRenderUtil {
 
         // 2) RestTemplate 로 내부 HTTP 호출
         RestTemplate restTemplate = new RestTemplate();
+        // url.toString() api 호출 해서 String 문자열을 얻어옴(완성된 강의계획서 html String)
         return restTemplate.getForObject(url.toString(), String.class);
     }
 }
