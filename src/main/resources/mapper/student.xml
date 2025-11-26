@@ -4,12 +4,61 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.pentagonUniv.domain.student.StudentRepository">
+<!--    <resultMap id="studentInfoResultMap" type="com.example.pentagonUniv.domain.student.dto.StudentInfoDto">-->
+<!--        <id column="ID" property="id"/>-->
+<!--        <result column="NAME" property="name"/>-->
+<!--        <result column="USER_NUMBER" property="userNumber"/>-->
+<!--        <result column="BIRTHDATE" property="birthDate"/>-->
+<!--        <result column="GENDER" property="gender"/>-->
+<!--        <result column="ADDRESS" property="address"/>-->
+<!--        <result column="TEL" property="tel"/>-->
+<!--        <result column="EMAIL" property="email"/>-->
+<!--        <result column="USERTYPE" property="userType"/>-->
+<!--        <result column="ORIGINFILENAME" property="originFileName"/>-->
+<!--        <result column="UPLOADFILENAME" property="uploadFileName"/>-->
+<!--        <result column="DEPTID" property="deptId"/>-->
+<!--        <result column="GRADE" property="grade"/>-->
+<!--        <result column="SEMESTER" property="semester"/>-->
+<!--        <result column="ENTRANCEDATE" property="entranceDate"/>-->
+<!--        <result column="GRADUATIONDATE" property="graduationDate"/>-->
+<!--    </resultMap>-->
+
     <!-- 유저 등록 -->
-    <insert id="createStudent" parameterType="StudentRequestDto" 
-        useGeneratedKeys="true" 
+    <insert id="createStudent" parameterType="StudentRequestDto"
+        useGeneratedKeys="true"
         keyProperty="id" >
-        insert into pu_user (user_number,name,birth_date,gender,address,tel,email,password,dept_id,grade,semester,entrance_date,user_type) 
+        insert into pu_user (user_number,name,birth_date,gender,address,tel,email,password,dept_id,grade,semester,entrance_date,user_type)
         values (#{userNumber} , #{name} , #{birthDate} , #{gender} , #{address} , #{tel} , #{email} , #{password} , #{deptId}, #{grade} , #{semester} , #{entranceDate} , #{userType})
     </insert>
 
+    <!--학생 정보 조회(ID)-->
+    <select id="selectStudentInfoById" parameterType="Integer" resultType="com.example.pentagonUniv.domain.student.dto.StudentInfoDto">
+        SELECT u.id,
+            u.name,
+            u.user_number as userNumber,
+            u.birth_date as birthDate,
+            u.gender, u.address, u.tel, u.email,
+            u.user_type as userType, u.origin_file_name as originFileName,
+            u.upload_file_name as uploadFileName,
+            u.dept_id as deptId,
+            u.grade, u.semester, u.entrance_date as entranceDate,
+            u.graduation_date as graduationDate,
+            d.name as deptName,
+            c.name as collegeName
+        FROM pu_user u
+        LEFT JOIN pu_department d ON u.dept_id = d.id
+        LEFT JOIN pu_college c ON d.college_id = c.id
+        WHERE u.id = #{id}
+    </select>
+
+    <!--학생 성적 조회-->
+    <select id="selectStudentAcademicRecords" parameterType="Long" resultType="com.example.pentagonUniv._global.utils.pdf.dto.AcademicRecordCertificateData$AcademicRecordDto">
+        SELECT s.name as subjectName,
+            stu.grade,
+            stu.complete_grade as credits
+        FROM pu_stu_sub stu
+        JOIN pu_subject s ON stu.subject_id = s.id
+        WHERE stu.student_id = #{studentId}
+        ORDER BY s.id
+    </select>
 </mapper>

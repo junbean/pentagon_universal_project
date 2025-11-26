@@ -464,10 +464,9 @@
 							</div>
 							<div class="col-lg-3 col-md-4 mt-4 mt-lg-0">
 								<div class="icon-box">
-									<i class="ri-paint-brush-line" style="color: #e361ff;"></i>
-
+									<i class="ri-printer-line" style="color: #e361ff;"></i>
 									<h3>
-										<a href="/student/tuition">등록금 납부고지서 출력</a>
+										<a href="/certificate/issue">증명서 발급</a>
 									</h3>
 								</div>
 							</div>

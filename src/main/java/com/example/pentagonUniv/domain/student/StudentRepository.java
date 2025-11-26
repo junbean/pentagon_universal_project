@@ -1,6 +1,7 @@
 package com.example.pentagonUniv.domain.student;
 import java.util.List;
 
+import com.example.pentagonUniv._global.utils.pdf.dto.AcademicRecordCertificateData;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -17,4 +18,6 @@ public interface StudentRepository {
 
     // 학생 등록 하기
     public void createStudent(StudentRequestDto dto);
+
+	List<AcademicRecordCertificateData.AcademicRecordDto> selectStudentAcademicRecords(@Param("studentId") Long studentId);
 }
