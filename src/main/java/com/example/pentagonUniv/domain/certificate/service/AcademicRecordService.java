@@ -81,7 +81,7 @@ public class AcademicRecordService {
 
 			AcademicRecordCertificateData pdfData = AcademicRecordCertificateData.builder()
 					.studentName(student.getName())
-					.studentId(String.valueOf(student.getId()))
+					.studentId(String.valueOf(student.getUserNumber()))
 					.birthDate(student.getBirthDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate())
 					.gender(student.getGender())
 					.collegeName(student.getCollegeName())

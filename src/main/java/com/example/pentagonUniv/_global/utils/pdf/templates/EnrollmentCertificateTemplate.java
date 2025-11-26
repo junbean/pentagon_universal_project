@@ -19,7 +19,6 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * 재학증명서 PDF 템플릿
- *
  * @author yeram
  */
 public class EnrollmentCertificateTemplate implements CertificateTemplate {

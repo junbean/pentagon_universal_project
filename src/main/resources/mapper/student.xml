@@ -6,6 +6,7 @@
     <resultMap id="studentInfoResultMap" type="com.example.pentagonUniv.domain.student.dto.StudentInfoDto">
         <id column="ID" property="id"/>
         <result column="NAME" property="name"/>
+        <result column="USER_NUMBER" property="userNumber"/>
         <result column="BIRTHDATE" property="birthDate"/>
         <result column="GENDER" property="gender"/>
         <result column="ADDRESS" property="address"/>
@@ -26,6 +27,7 @@
     <select id="selectStudentInfoById" parameterType="Integer" resultType="com.example.pentagonUniv.domain.student.dto.StudentInfoDto">
         SELECT u.id,
             u.name,
+            u.user_number as userNumber,
             u.birth_date as birthDate,
             u.gender, u.address, u.tel, u.email,
             u.user_type as userType, u.origin_file_name as originFileName,

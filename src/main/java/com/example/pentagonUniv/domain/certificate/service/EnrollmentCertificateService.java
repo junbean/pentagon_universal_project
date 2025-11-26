@@ -40,7 +40,7 @@ public class EnrollmentCertificateService {
 			// PDF 데이터 생성
 			EnrollmentCertificateData pdfData = EnrollmentCertificateData.builder()
 					.studentName(student.getName())
-					.studentId(String.valueOf(student.getId()))
+					.studentId(student.getUserNumber())
 					.birthDate(student.getBirthDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate())
 					.gender(student.getGender())
 					.collegeName(student.getCollegeName())

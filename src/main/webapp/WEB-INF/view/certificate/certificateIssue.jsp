@@ -166,7 +166,7 @@
 
                 setTimeout(() => {
                     goToList();
-                }, 2000);
+                }, 1000);
             } else {
                 errorMsg.textContent = '❌ ' + data.message;
                 errorMsg.classList.add('show');
